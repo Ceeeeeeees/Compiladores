@@ -11,33 +11,34 @@ public class Scanner {
 
     private final String Codigo;
 
-    private final List < Token > Tokens = new ArrayList<>();
+    private final List<Token> Tokens = new ArrayList<>();
 
     private int linea = 1;
 
-    private static final Map < String , TipoToken > PalabrasReservadas;
-    static
-    {
-        PalabrasReservadas = new HashMap <> ();
-        PalabrasReservadas.put("y" , TipoToken.Y);
-        PalabrasReservadas.put("clase" , TipoToken.CLASE);
-        PalabrasReservadas.put("ademas" , TipoToken.ADEMAS);
-        PalabrasReservadas.put("falso" , TipoToken.FALSO );
-        PalabrasReservadas.put("por" , TipoToken.POR );
-        PalabrasReservadas.put("fun" , TipoToken.FUNCION ); //definir funciones
-        PalabrasReservadas.put("si", TipoToken.SI );
-        PalabrasReservadas.put("nulo" , TipoToken.NULO );
-        PalabrasReservadas.put("o" , TipoToken.O );
-        PalabrasReservadas.put("imprimir" , TipoToken.IMPRIMIR );
-        PalabrasReservadas.put("retorno" , TipoToken.RETORNAR );
+    private static final Map<String, TipoToken> PalabrasReservadas;
+    static {
+        PalabrasReservadas = new HashMap<>();
+        PalabrasReservadas.put("y", TipoToken.Y);
+        PalabrasReservadas.put("clase", TipoToken.CLASE);
+        PalabrasReservadas.put("ademas", TipoToken.ADEMAS);
+        PalabrasReservadas.put("falso", TipoToken.FALSO);
+        PalabrasReservadas.put("por", TipoToken.POR);
+        PalabrasReservadas.put("fun", TipoToken.FUNCION); // definir funciones
+        PalabrasReservadas.put("si", TipoToken.SI);
+        PalabrasReservadas.put("nulo", TipoToken.NULO);
+        PalabrasReservadas.put("o", TipoToken.O);
+        PalabrasReservadas.put("imprimir", TipoToken.IMPRIMIR);
+        PalabrasReservadas.put("retorno", TipoToken.RETORNAR);
         PalabrasReservadas.put("super", TipoToken.SUPER);
-        PalabrasReservadas.put("este" , TipoToken.ESTE);
-        PalabrasReservadas.put("verdadero" , TipoToken.VERDADERO);
-        PalabrasReservadas.put("var" , TipoToken.VARIABLE); //definir variables
-        PalabrasReservadas.put("mientras" , TipoToken.MIENTRAS);
+        PalabrasReservadas.put("este", TipoToken.ESTE);
+        PalabrasReservadas.put("verdadero", TipoToken.VERDADERO);
+        PalabrasReservadas.put("var", TipoToken.VARIABLE); // definir variables
+        PalabrasReservadas.put("mientras", TipoToken.MIENTRAS);
+
+        OpRel.put();
     }
 
-    Scanner(String Codigo){
+    Scanner(String Codigo) {
         this.Codigo = Codigo;
     }
 
@@ -49,16 +50,16 @@ public class Scanner {
         char Caracter;
         char Alfa;
         int estado = 0;
-
+        int ID = -1;
         int estadoOpRel = 0;
 
         //Creando el automata de Operadores Relacionales y comentarios
 
-        while (1){
+       
 
           //  TokenOpRel tokens
 
-            for (int j = 0; j < Codigo.length(); j++) 
+            for (int j = 0; j < Codigo.length(); j++; ID++)
             {
                 Alfa = Codigo.charAt(j);
 
@@ -66,24 +67,61 @@ public class Scanner {
 
                 case 0: 
 
-                    if ( Alfa == '<' ) { estadoOpRel = 1 ; Tokens.add(new Token(TipoToken.OpRel, "MENOR", null, ID + 1)); }
+                    if ( Alfa == '<' ) { estadoOpRel = 1 ; 
+                        Tokens.add(new Token(TipoToken.OpRel, "MENOR", null, ID + 1)); 
+                        break;}
 
-                    else if ( Alfa == '=' ) estadoOpRel = 2;
+                    else if ( Alfa == '=' ) { estadoOpRel = 5; 
+                        Tokens.add(new Token(TipoToken.OpRel, "IGUAL", null, ID + 1)); 
+                        break;}
                     
-                    else estadoOpRel = 4;
+                    else if ( Alfa == '>' ) { estadoOpRel = 7;
+                        Tokens.add(new Token(TipoToken.OpRel, "MAYOR", null, ID + 1)); 
+                        break;}
 
-                case : estadoOpRel = 5;
+                    else if ( Alfa == '!' )  estadoOpRel = 9;
 
-                    if(Alfa == '=') estadoOpRel = 6;
+                    else if ( Alfa == '(')  estadoOpRel = 10;
+                           
+
+                  //  else //Estado de error NO ES UN OPERADOR RELACIONAL
+
+                case 1: 
+
+                    if ( Alfa == '=') {estadoOpRel = 2 ;
+                        Tokens.add(new Token(TipoToken.OpRel, "MENORIGUAL", null, ID + 1)); 
+                        break;
+                    }
+                    
+                 //   else //Estado de error
+
+                case 5:
+                    if ( Alfa == '='){ estadoOpRel = 6;
+                        Tokens.add(new Token(TipoToken.OpRel, "IGUALIGUAL", null, ID + 1)); 
+                        break;
+                    }
                 
-                case '>':
+                case 7:
+                    if ( Alfa == '=' ) {estadoOpRel = 8;
+                        Tokens.add(new Token(TipoToken.OpRel, "MAYORIGUAL", null, ID + 1)); 
+                        break;
+                    }    
+                
+                case 9:
+                    if ( Alfa == '=' ) {estadoOpRel = 8;
+                        Tokens.add(new Token(TipoToken.OpRel, "DIFERENTEA", null, ID + 1)); 
+                        break;
+                    }
 
-                case '!':
+                case 10 : 
+                   
+
+                    
 
                  
                     
             }
-        }
+        
 
     //Palabras reservadas :
 
@@ -121,36 +159,37 @@ public class Scanner {
          */
         Tokens.add(new Token(TipoToken.EOF, "", null, linea));
 
-        return Tokens;
+       
     }
+}
 }
 
 /*
-Signos o símbolos del lenguaje:
-(
-)
-{
-}
-,
-.
-;
--
-+
-*
-/
-!
-!=
-=
-==
-<
-<=
->
->=
-// -> comentarios (no se genera token)
-/* ... * / -> comentarios (no se genera token)
-Identificador,
-Cadena
-Numero
-Cada palabra reservada tiene su nombre de token
-
+ * Signos o símbolos del lenguaje:
+ * (
+ * )
+ * {
+ * }
+ * ,
+ * .
+ * ;
+ * -
+ * +
+ *
+ * /
+ * !
+ * !=
+ * =
+ * ==
+ * <
+ * <=
+ * >
+ * >=
+ * // -> comentarios (no se genera token)
+ * /* ... * / -> comentarios (no se genera token)
+ * Identificador,
+ * Cadena
+ * Numero
+ * Cada palabra reservada tiene su nombre de token
+ * 
  */
