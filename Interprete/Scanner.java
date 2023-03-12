@@ -47,7 +47,46 @@ public class Scanner {
         
 
         char Caracter;
+        char Alfa;
         int estado = 0;
+
+        int estadoOpRel = 0;
+
+        //Creando el automata de Operadores Relacionales y comentarios
+
+        while (1){
+
+          //  TokenOpRel tokens
+
+            for (int j = 0; j < Codigo.length(); j++) 
+            {
+                Alfa = Codigo.charAt(j);
+
+                switch (estadoOpRel) {
+
+                case 0: 
+
+                    if ( Alfa == '<' ) { estadoOpRel = 1 ; Tokens.add(new Token(TipoToken.OpRel, "MENOR", null, ID + 1)); }
+
+                    else if ( Alfa == '=' ) estadoOpRel = 2;
+                    
+                    else estadoOpRel = 4;
+
+                case : estadoOpRel = 5;
+
+                    if(Alfa == '=') estadoOpRel = 6;
+                
+                case '>':
+
+                case '!':
+
+                 
+                    
+            }
+        }
+
+    //Palabras reservadas :
+
         for (int i = 0; i < Codigo.length(); i++) 
         {
             Caracter = Codigo.charAt(i);
@@ -69,6 +108,7 @@ public class Scanner {
                     //No empieza con una letras de las Palabras Reservadas
                     else return Tokens;
                     break;
+
             
                 default:
                     break;

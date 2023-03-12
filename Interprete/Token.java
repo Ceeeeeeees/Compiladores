@@ -1,5 +1,5 @@
 package mx.ipn.escom.compiladores;
-
+ 
 public class Token {
 
     final TipoToken tipo;
