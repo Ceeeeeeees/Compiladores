@@ -46,9 +46,9 @@ public class Interprete {
         }
     }
 
-    private static void ejecutar(String source){
-        Scanner scanner = new Scanner(source);
-        List<Token> tokens = scanner.scanTokens();
+    private static void ejecutar(String Codigo){
+        Scanner scanner = new Scanner(Codigo);
+        List<Token> tokens = scanner.ScanTokens();
 
         for(Token token : tokens){
             System.out.println(token);
