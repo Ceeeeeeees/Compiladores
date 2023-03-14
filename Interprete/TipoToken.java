@@ -5,12 +5,13 @@ public enum TipoToken {
     // Crear un tipoToken: identificador, una cadena y numero
     // Crear un tipoToken por cada "Signo del lenguaje" (ver clase Scanner)
 
-   
 
     // Palabras clave:
-    Y, CLASE , ADEMAS , SI , MIENTRAS , ENTONCES , FALSO , POR , FUNCION , NULO , O , IMPRIMIR ,
-    RETORNAR , SUPER , ESTE , VERDADERO , VARIABLE ,
+    Y, CLASE , ADEMAS, FALSO, PARA, FUNCION, SI, NULO, OR ,     
+    IMPRIMIR, RETORNAR, SUPER, ESTE, VERDADERO, VARIABLE, MIENTRAS, 
+    OpRel, 
 
     // Final de cadena
     EOF
 }
+
