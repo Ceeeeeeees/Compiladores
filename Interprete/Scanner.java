@@ -38,6 +38,21 @@ public class Scanner {
         this.source = source;
     }
 
+    // variable global para almacenar el índice del último caracter leído
+    int indice = 0;
+
+    // función para obtener el siguiente caracter del código fuente
+    char sigCar(String source) {
+        char car = codigo.charAt(indice);
+        indice++;
+        return car;
+    }
+
+    // función para retroceder un caracter en el código fuente
+    void retractar() {
+        indice--;
+    }
+
     List<Token> scanTokens(){
         //Aquí va el corazón del scanner.
 
@@ -45,27 +60,41 @@ public class Scanner {
 
         int estado = 0;
 
-        for (int j = 0; j < source.length(); j++)
-            {
-                Alfa = source.charAt(j);
+        char c;
 
+        while (1)
+        {
                 switch (estadoOpRel) {
 
                     case 0 :
 
-                    if ( Alfa == '<' ) { estadoOpRel = 1 ; 
+                    c = sigCar(source);
+                    if ( c == '<' ) { estadoOpRel = 1 ; 
                         Tokens.add(new Token(TipoToken.OpRel, '<', null, linea)); 
                         }
 
-                    else if ( Alfa == '=' ) { estadoOpRel = 5; 
-                        Tokens.add(new Token(TipoToken.OpRel, "IGUAL", null, ID + 1)); 
+                    else if ( c == '=' ) { estadoOpRel = 5; 
+                        Tokens.add(new Token(TipoToken.OpRel, "=", null, null)); 
                         break;}
                     
-                    else if ( Alfa == '>' ) { estadoOpRel = 7;
-                        Tokens.add(new Token(TipoToken.OpRel, "MAYOR", null, ID + 1)); 
+                    else if ( c == '>' ) { estadoOpRel = 7;
+                        Tokens.add(new Token(TipoToken.OpRel, '>', null, literal )); 
                         break;}
 
-                    else if ( Alfa == '!' )  estadoOpRel = 9;
+                    else if ( c == '!' ) { estadoOpRel = 9;
+                    Tokens.add(new Token(TipoToken.OpRel, '<', null, linea));
+                }
+                    //case 1:
+
+                       // if ( ){
+
+                        
+                    //}
+                    
+
+                    //case 9 :
+                    
+                    
                 }
 
         /*
@@ -76,6 +105,7 @@ public class Scanner {
 
         return tokens;
     }
+}
 }
 
 /*
