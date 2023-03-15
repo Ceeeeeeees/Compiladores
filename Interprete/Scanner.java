@@ -48,28 +48,33 @@ public class Scanner {
 
         char Caracter;
         int estado = 0;
+        String Palabra;
         for (int i = 0; i < Codigo.length(); i++) 
         {
             Caracter = Codigo.charAt(i);
-            
+
             switch (estado) {
-                case 0: //primer automata: Palabras Reservadas
-                    if ( Caracter == 'y' ) estado = 1; //Son estados provicionales
-                    else if ( Caracter == 'c' ) estado = 2; //No son definitivos
-                    else if ( Caracter == 'a' ) estado = 3; //falta crear el automata real
-                    else if ( Caracter == 'f' ) estado = 4;
-                    else if ( Caracter == 'p' ) estado = 5;
-                    else if ( Caracter == 's' ) estado = 6;
-                    else if ( Caracter == 'n' ) estado = 7;
-                    else if ( Caracter == 'o' ) estado = 8;
-                    else if ( Caracter == 'i' ) estado = 9;
-                    else if ( Caracter == 'e' ) estado = 10;
-                    else if ( Caracter == 'v' ) estado = 11;
-                    else if ( Caracter == 'm' ) estado = 12;
-                    //No empieza con una letras de las Palabras Reservadas
-                    else return Tokens;
+                case 0:
+                    if (Character.isDigit(Caracter) == true) estado = 3;
+                    else estado = 2;
                     break;
-            
+                case 2:
+                    if(Character.isDigit(Caracter) == true ) estado = 2; //Digito
+                    else if (Caracter == '(' || Caracter == '=' || Caracter == '!' || Caracter == '<' || Caracter == '>' || 
+                             Caracter == '/' || Caracter == '+' || Caracter == '*' || Caracter == ',' || Caracter == ';' || 
+                             Caracter == '{' || Caracter == '-' || Caracter == '.') estado = AutomataOpeRel; //Simbolo
+                    else if (Caracter == ' ') estado = CheckToken; //Comprobar si es un Identificador o una Palabra Reservada
+                    else estado = 2; //letra
+                    estado = 2; //Letra
+                case 3:
+                    if(Palabra == "y" || Palabra == "clase" || Palabra == "ademas" || Palabra == "falso" || Palabra == "por" ||
+                       Palabra == "fun" || Palabra == "si" || Palabra == "nulo" || Palabra == "o" || Palabra == "imprimir" ||
+                       Palabra == "retorno" || Palabra == "super" || Palabra == "este" || Palabra == "verdadero" || Palabra == "var" || 
+                       Palabra == "mientras") {estado = 0; Palabra = null;}//poner las palabras reservadas
+                    else Tokens.add(new Token(TipoToken.IDENTIFICAOR,Palabra,null,linea));
+
+                case 7: //Digito
+                    if(Character.isDigit(Caracter) == true) estado = 3;
                 default:
                     break;
             }
