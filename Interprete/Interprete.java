@@ -12,6 +12,8 @@ public class Interprete {
 
     static boolean existenErrores = false;
 
+    //a
+
     public static void main(String[] args) throws IOException {
         if(args.length > 1) {
             System.out.println("Uso correcto: interprete [script]");
