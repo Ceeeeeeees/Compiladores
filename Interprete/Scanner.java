@@ -86,6 +86,16 @@ public class Scanner {
          */
         Tokens.add(new Token(TipoToken.EOF, "", null, linea));
 
+        //Incrustar ForEach en el automata para Palabras Reservadas
+        for (Map.Entry<String, TipoToken> entry : PalabrasReservadas.entrySet()) 
+        {
+            String auxiliar = entry.getKey();
+            if( Palabra == auxiliar)
+            {
+                Tokens.add(entry.get(auxiliar));
+            }
+        }
+
         return Tokens;
     }
 }
