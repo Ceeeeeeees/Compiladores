@@ -20,7 +20,7 @@ public class Scanner {
         palabrasReservadas.put("clase", TipoToken.CLASE);
         palabrasReservadas.put("ademas", TipoToken.ADEMAS);
         palabrasReservadas.put("falso", TipoToken.FALSO);
-        palabrasReservadas.put("para", TipoToken.PARA);
+        palabrasReservadas.put("por", TipoToken.POR);
         palabrasReservadas.put("fun", TipoToken.FUNCION); // definir funciones
         palabrasReservadas.put("si", TipoToken.SI);
         palabrasReservadas.put("nulo", TipoToken.NULO);
@@ -39,73 +39,124 @@ public class Scanner {
     }
 
     // variable global para almacenar el índice del último caracter leído
-    int indice = 0;
-
-    // función para obtener el siguiente caracter del código fuente
-    char sigCar(String source) {
-        char car = codigo.charAt(indice);
-        indice++;
-        return car;
-    }
+    int i = 0;
 
     // función para retroceder un caracter en el código fuente
     void retractar() {
-        indice--;
+        i--;
     }
 
-    List<Token> scanTokens(){
-        //Aquí va el corazón del scanner.
+    // Funcion para saber si es letra o digito
+    public boolean esLetraODigito(char c) {
+        return Character.isLetter(c) || Character.isDigit(c);
+    }
 
-        //Creando el automata de operadores relacionales
+//Funcion para recibir el primer caracter del lexema y lo almacena
+    
 
-        int estado = 0;
+    List<Token> scanTokens() {
+        // Aquí va el corazón del scanner.
+
+        // Creando el automata de operadores relacionales
+
+        int estadoOpRel = 0;
 
         char c;
 
-        while (1)
-        {
-                switch (estadoOpRel) {
+        for (int i = 0; i < source.length(); i++) {
 
-                    case 0 :
+            c = source.charAt(i);
 
-                    c = sigCar(source);
-                    if ( c == '<' ) { estadoOpRel = 1 ; 
-                        Tokens.add(new Token(TipoToken.OpRel, '<', null, linea)); 
+            switch (estadoOpRel) {
+
+                case 0:
+                    if (c == '<') {
+                        estadoOpRel = 1;
+
+                    }
+                    else if (c == '=') {
+                        estadoOpRel = 5;
+
+
+                    } else if (c == '>') {
+                        estadoOpRel = 10;
+
+                    }
+
+                    else if (c == '(') {
+                        estadoOpRel = 13;
+                    }
+                    break;
+                case 1:
+                    if (c == '=') {
+                        estadoOpRel = 2;
+                        tokens.add(new Token(TipoToken.opRel, "<=", null, linea));
+
+                    }
+                    else
+                        if (c == '>'){
+                            estadoOpRel = 3;
+                            tokens.add(new Token(TipoToken.opRel, "<>", null, linea));
+
                         }
+                        else {
+                            if (esLetraODigito(c)){
+                            estadoOpRel = 4;
+                            tokens.add(new Token(TipoToken.opRel, "<", null, linea));
+                            }
+                        }
+                        break;
 
-                    else if ( c == '=' ) { estadoOpRel = 5; 
-                        Tokens.add(new Token(TipoToken.OpRel, "=", null, null)); 
-                        break;}
-                    
-                    else if ( c == '>' ) { estadoOpRel = 7;
-                        Tokens.add(new Token(TipoToken.OpRel, '>', null, literal )); 
-                        break;}
-
-                    else if ( c == '!' ) { estadoOpRel = 9;
-                    Tokens.add(new Token(TipoToken.OpRel, '<', null, linea));
+                case 5:
+                    if ( c == '='){
+                        estadoOpRel = 6;
+                    }
+                    else
+                        if (esLetraODigito(c)){
+                            estadoOpRel = 7;
+                            tokens.add(new Token(TipoToken.opRel, "=", null, linea));
+                            retractar();
+                        }
+                    break;
+                case 6:
+                    if (esLetraODigito(c)){
+                        estadoOpRel = 8;
+                        tokens.add(new Token(TipoToken.opRel, "==", null, linea));
+                        retractar();
                 }
-                    //case 1:
+                break;
 
-                       // if ( ){
+                case 10:
+                    if (c == '='){
+                        estadoOpRel = 11;
+                        tokens.add(new Token(TipoToken.opRel, ">=", null, linea));
+                    }
+                    else {
+                        estadoOpRel = 12;
+                        tokens.add(new Token(TipoToken.opRel, "<", null, linea));
+                        retractar();
+                    }
+                    break;
 
-                        
-                    //}
-                    
+                case 13:
+                    if (esLetraODigito(c)){
 
-                    //case 9 :
-                    
-                    
-                }
+                    }
+
+            }
+
+           // System.out.println(c);
+
+        }
 
         /*
-        Analizar el texto de entrada para extraer todos los tokens
-        y al final agregar el token de fin de archivo
+         * Analizar el texto de entrada para extraer todos los tokens
+         * y al final agregar el token de fin de archivo
          */
         tokens.add(new Token(TipoToken.EOF, "", null, linea));
 
         return tokens;
     }
-}
 }
 
 /*
