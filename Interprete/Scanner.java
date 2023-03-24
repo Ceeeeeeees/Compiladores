@@ -51,8 +51,7 @@ public class Scanner {
         return Character.isLetter(c) || Character.isDigit(c);
     }
 
-//Funcion para recibir el primer caracter del lexema y lo almacena
-    
+    // Funcion para recibir el primer caracter del lexema y lo almacena
 
     List<Token> scanTokens() {
         // Aquí va el corazón del scanner.
@@ -73,17 +72,15 @@ public class Scanner {
                     if (c == '<') {
                         estadoOpRel = 1;
 
-                    }
-                    else if (c == '=') {
+                    } else if (c == '=') {
                         estadoOpRel = 5;
-
 
                     } else if (c == '>') {
                         estadoOpRel = 10;
 
                     }
 
-                    else if (c == '(') {
+                    else if (Character.isDigit(c)) {
                         estadoOpRel = 13;
                     }
                     break;
@@ -92,60 +89,90 @@ public class Scanner {
                         estadoOpRel = 2;
                         tokens.add(new Token(TipoToken.opRel, "<=", null, linea));
 
-                    }
-                    else
-                        if (c == '>'){
-                            estadoOpRel = 3;
-                            tokens.add(new Token(TipoToken.opRel, "<>", null, linea));
+                    } else if (c == '>') {
+                        estadoOpRel = 3;
+                        tokens.add(new Token(TipoToken.opRel, "<>", null, linea));
 
-                        }
-                        else {
-                            if (esLetraODigito(c)){
-                            estadoOpRel = 4;
-                            tokens.add(new Token(TipoToken.opRel, "<", null, linea));
-                            }
-                        }
-                        break;
+                    } else {
+
+                        estadoOpRel = 4;
+                        tokens.add(new Token(TipoToken.opRel, "<", null, linea));
+                        retractar();
+
+                    }
+                    break;
 
                 case 5:
-                    if ( c == '='){
+                    if (c == '=') {
                         estadoOpRel = 6;
+                    } else {
+                        estadoOpRel = 7;
+                        tokens.add(new Token(TipoToken.opRel, "=", null, linea));
+                        retractar();
                     }
-                    else
-                        if (esLetraODigito(c)){
-                            estadoOpRel = 7;
-                            tokens.add(new Token(TipoToken.opRel, "=", null, linea));
-                            retractar();
-                        }
                     break;
+
                 case 6:
-                    if (esLetraODigito(c)){
+                    if (Character.isLetterOrDigit(c)) {
                         estadoOpRel = 8;
                         tokens.add(new Token(TipoToken.opRel, "==", null, linea));
-                        retractar();
-                }
-                break;
+                    }
+                    break;
 
                 case 10:
-                    if (c == '='){
+                    if (c == '=') {
                         estadoOpRel = 11;
                         tokens.add(new Token(TipoToken.opRel, ">=", null, linea));
-                    }
-                    else {
+                    } else {
                         estadoOpRel = 12;
-                        tokens.add(new Token(TipoToken.opRel, "<", null, linea));
+                        tokens.add(new Token(TipoToken.opRel, ">", null, linea));
                         retractar();
                     }
                     break;
 
                 case 13:
-                    if (esLetraODigito(c)){
+                    if (Character.isDigit(c)) {
+                        estadoOpRel = 13;
+                    } else if (c == '.') {
+                        estadoOpRel = 14;
+                    } else if (c == 'E') {
 
+                        estadoOpRel = 16;
+
+                    } else {
+                        estadoOpRel = 20;
+                        // tokens.add(new Token(TipoToken.opRel, "", null, linea));
+                        retractar();
                     }
+                    break;
+
+                case 14:
+                    if (Character.isDigit(c)) {
+                        estadoOpRel = 15;
+                    }
+                    break;
+
+                case 15:
+                    if (Character.isDigit(c)) {
+                        estadoOpRel = 15;
+                    } else if (c == 'E') {
+
+                        estadoOpRel = 16;
+
+                    } else {
+                        estadoOpRel = 21;
+                        retractar();
+                    }
+                    break;
+
+              /*   default:
+
+                    System.out.println("\tNo se pudo detectar lo que ingresaste\t\n");
+                    break;*/
 
             }
 
-           // System.out.println(c);
+            // System.out.println(c);
 
         }
 
