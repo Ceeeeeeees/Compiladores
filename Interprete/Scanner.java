@@ -51,27 +51,27 @@ public class Scanner {
         char Caracter;   
         StringBuilder Palabra = new StringBuilder();
         String NuevoLexema = null;
+        var a = 5+10;
+
+        String CodigoSinComentarios = Codigo.replaceAll("\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/", " ");
 
         if(Character.isLetter('y')) System.out.println("es una 'y'");
 
-        for (int i = 0; i < Codigo.length(); i++)
+        for (int i = 0; i < CodigoSinComentarios.length(); i++)
         {
-            Caracter = Codigo.charAt(i);
+            Caracter = CodigoSinComentarios.charAt(i);
 
             switch (estado) {
                 case 9:
-                    //System.out.println("Caso 9");
-                    if (Character.isDigit(Caracter)){ estado = 8; Palabra.append(Caracter); }
-                    else if(Character.isLetter(Caracter)){ estado = 10; Palabra.append(Caracter); }
+                    if (Character.isDigit(Caracter)) { estado = 12; Palabra.append(Caracter); } //Va al Automata de Digitos
+                    else if(Character.isLetter(Caracter)) { estado = 10; Palabra.append(Caracter); } //Va al Automata de PalabrasReservadas o Identificadores
                     break;
                 case 10:
-                    //System.out.println("Caso 10");
-                    if (Character.isWhitespace(Caracter) /*u otro simbolo */) estado = 11;
-                    else if (Character.isLetterOrDigit(Caracter)) Palabra.append(Caracter);
-                    else estado = 13;
+                    if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11;
+                    else if (Character.isLetterOrDigit(Caracter)) Palabra.append(Caracter); //Si hay una letra o digito nos quedamos en el mismo estado
+                    else estado = 19; //Detectamos si hay un espacio en blanco u otro simbolo
                     break;
                 case 11:
-                    //System.out.println("Caso 11");
                     NuevoLexema = Palabra.toString();
                     Palabra.setLength(0);
                     System.out.println(NuevoLexema);
@@ -80,26 +80,58 @@ public class Scanner {
                         NuevoLexema.equals("retorno") | NuevoLexema.equals("super") | NuevoLexema.equals("este") | NuevoLexema.equals("verdadero") | NuevoLexema.equals("var") | NuevoLexema.equals("mientras"))
                         for (Map.Entry<String,TipoToken>entry:PalabrasReservadas.entrySet()){
                             String palabrareservada = entry.getKey();
-                            if (NuevoLexema.equals(palabrareservada)) Tokens.add(new Token(PalabrasReservadas.get(NuevoLexema),NuevoLexema,null,linea));
+                            if (NuevoLexema.equals(palabrareservada)) Tokens.add(new Token(PalabrasReservadas.get(NuevoLexema),palabrareservada,null,linea));
                         }
                     else Tokens.add(new Token(TipoToken.IDENTIFICADOR,NuevoLexema,null,linea));
                     estado = 9;
                     i=retractar(i);
-                    //System.out.println(Tokens.get());
+                    break;
+                case 12:
+                    if (Character.isDigit(Caracter)) Palabra.append(Caracter);
+                    else if (Character.isWhitespace(Caracter) | Character.isLetter(Caracter)) estado = 18;
+                    else if (Caracter == '.') { estado = 13; Palabra.append(Caracter); }
+                    else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
+                    else estado = 19;
+                    break;
+                case 13:
+                    if (Character.isDigit(Caracter)) { estado = 14; Palabra.append(Caracter); }
+                    break;
+                case 14:
+                    if (Character.isDigit(Caracter)) Palabra.append(Caracter);
+                    else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
+                    else if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 18;
+                    else estado = 19;
+                    break;
+                case 15:
+                    if (Caracter == '+' | Caracter == '-') { estado = 16; Palabra.append(Caracter); }
+                    else if (Character.isDigit(Caracter)) { estado = 17; Palabra.append(Caracter); }
+                    break;
+                case 16:
+                    if (Character.isDigit(Caracter)) { estado = 17; Palabra.append(Caracter); }
+                    break;
+                case 17:
+                    if (Character.isDigit(Caracter)) Palabra.append(Caracter);
+                    else estado = 18;
+                    break;
+                case 18:
+                    NuevoLexema = Palabra.toString();
+                    Palabra.setLength(0);
+                    System.out.println(NuevoLexema);
+                    Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
+                    estado = 9;
+                    i=retractar(i);
                     break;
                 default:
                     break;
             }
-            System.out.println(Caracter + " Caso: " + estado);
         }
-
         /*
         Analizar el texto de entrada para extraer todos los tokens
         y al final agregar el token de fin de archivo
          */
-        Tokens.add(new Token(TipoToken.EOF, "", null, linea));
-
+        Tokens.add(new Token(TipoToken.EOF, "$", null, linea));
         return Tokens;
+
     }
 }
 
