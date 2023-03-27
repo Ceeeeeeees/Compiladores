@@ -41,17 +41,11 @@ public class Scanner {
         this.Codigo = Codigo;
     }
 
+    int retractar (int i){ i--; return (i);}
     List < Token > ScanTokens(){
 
         //Aquí va el corazón del scanner.
-        
-<<<<<<< Updated upstream
 
-        char Caracter;
-        int estado = 0;
-        String Palabra;
-        for (int i = 0; i < Codigo.length(); i++) 
-=======
         int estado = 9;
         char Caracter;   
         StringBuilder Palabra = new StringBuilder();
@@ -60,16 +54,13 @@ public class Scanner {
         String CodigoSinComentarios = Codigo.replaceAll("\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/", " ");
 
         for (int i = 0; i < CodigoSinComentarios.length(); i++)
->>>>>>> Stashed changes
         {
             Caracter = Codigo.charAt(i);
 
             switch (estado) {
-<<<<<<< Updated upstream
                 case 0:
                     if (Character.isDigit(Caracter) == true) estado = 3;
                     else estado = 2;
-=======
                 case 1:
                     if (Caracter == '=') {
                         estado = 9;
@@ -176,25 +167,7 @@ public class Scanner {
                     Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
                     estado = 9;
                     i=retractar(i);
->>>>>>> Stashed changes
                     break;
-                case 2:
-                    if(Character.isDigit(Caracter) == true ) estado = 2; //Digito
-                    else if (Caracter == '(' || Caracter == '=' || Caracter == '!' || Caracter == '<' || Caracter == '>' || 
-                             Caracter == '/' || Caracter == '+' || Caracter == '*' || Caracter == ',' || Caracter == ';' || 
-                             Caracter == '{' || Caracter == '-' || Caracter == '.') estado = AutomataOpeRel; //Simbolo
-                    else if (Caracter == ' ') estado = CheckToken; //Comprobar si es un Identificador o una Palabra Reservada
-                    else estado = 2; //letra
-                    estado = 2; //Letra
-                case 3:
-                    if(Palabra == "y" || Palabra == "clase" || Palabra == "ademas" || Palabra == "falso" || Palabra == "por" ||
-                       Palabra == "fun" || Palabra == "si" || Palabra == "nulo" || Palabra == "o" || Palabra == "imprimir" ||
-                       Palabra == "retorno" || Palabra == "super" || Palabra == "este" || Palabra == "verdadero" || Palabra == "var" || 
-                       Palabra == "mientras") {estado = 0; Palabra = null;}//poner las palabras reservadas
-                    else Tokens.add(new Token(TipoToken.IDENTIFICAOR,Palabra,null,linea));
-
-                case 7: //Digito
-                    if(Character.isDigit(Caracter) == true) estado = 3;
                 default:
                     break;
             }
@@ -205,17 +178,6 @@ public class Scanner {
         y al final agregar el token de fin de archivo
          */
         Tokens.add(new Token(TipoToken.EOF, "", null, linea));
-
-        //Incrustar ForEach en el automata para Palabras Reservadas
-        for (Map.Entry<String, TipoToken> entry : PalabrasReservadas.entrySet()) 
-        {
-            String auxiliar = entry.getKey();
-            if( Palabra == auxiliar)
-            {
-                Tokens.add(entry.get(auxiliar));
-            }
-        }
-
         return Tokens;
     }
 }
