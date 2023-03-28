@@ -72,11 +72,17 @@ public class Scanner {
                     else if (Caracter == '-') estado = 21;
                     else if (Caracter == '*') estado = 22;
                     else if (Caracter == '/') estado = 23;
+                    else if (Caracter == '(') estado = 24;
+                    else if (Caracter == ')') estado = 25;
+                    else if (Caracter == '{') estado = 26;
+                    else if (Caracter == '}') estado = 27;
+                    else if (Caracter == ';') estado = 28;
+                    else if (Caracter == '.') estado = 29;
                     break;
                 case 10:
-                    if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11;
+                    if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11; //Detectamos si hay un espacio en blanco u otro simbolo
                     else if (Character.isLetterOrDigit(Caracter)) Palabra.append(Caracter); //Si hay una letra o digito nos quedamos en el mismo estado
-                    else estado = 24; //Detectamos si hay un espacio en blanco u otro simbolo
+                    else estado = 30;
                     break;
                 case 11:
                     NuevoLexema = Palabra.toString();
@@ -98,7 +104,7 @@ public class Scanner {
                     else if (Character.isWhitespace(Caracter) | Character.isLetter(Caracter)) estado = 18;
                     else if (Caracter == '.') { estado = 13; Palabra.append(Caracter); }
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
-                    else estado = 24;
+                    else estado = 30;
                     break;
                 case 13:
                     if (Character.isDigit(Caracter)) { estado = 14; Palabra.append(Caracter); }
@@ -107,7 +113,7 @@ public class Scanner {
                     if (Character.isDigit(Caracter)) Palabra.append(Caracter);
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
                     else if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 18;
-                    else estado = 24;
+                    else estado = 30;
                     break;
                 case 15:
                     if (Caracter == '+' | Caracter == '-') { estado = 16; Palabra.append(Caracter); }
@@ -154,6 +160,36 @@ public class Scanner {
                     break;
                 case 23:
                     Tokens.add(new Token(TipoToken.DIVICION,"/",null,linea));
+                    i = retractar(i);
+                    estado = 9;
+                    break;
+                case 24:
+                    Tokens.add(new Token(TipoToken.INPARENT,"(",null,linea));
+                    i = retractar(i);
+                    estado = 9;
+                    break;
+                case 25:
+                    Tokens.add(new Token(TipoToken.OUTPARENT,")",null,linea));
+                    i = retractar(i);
+                    estado = 9;
+                    break;
+                case 26:
+                    Tokens.add(new Token(TipoToken.INLLAVES,"{",null,linea));
+                    i = retractar(i);
+                    estado = 9;
+                    break;
+                case 27:
+                    Tokens.add(new Token(TipoToken.OUTLLAVES,"}",null,linea));
+                    i = retractar(i);
+                    estado = 9;
+                    break;
+                case 28:
+                    Tokens.add(new Token(TipoToken.PUNTOCOMA,";",null,linea));
+                    i = retractar(i);
+                    estado = 9;
+                    break;
+                case 29:
+                    Tokens.add(new Token(TipoToken.PUNTO,".",null,linea));
                     i = retractar(i);
                     estado = 9;
                     break;
