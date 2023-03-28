@@ -51,11 +51,8 @@ public class Scanner {
         char Caracter;   
         StringBuilder Palabra = new StringBuilder();
         String NuevoLexema = null;
-        var a = 5+10;
 
         String CodigoSinComentarios = Codigo.replaceAll("\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/", " ");
-
-        if(Character.isLetter('y')) System.out.println("es una 'y'");
 
         for (int i = 0; i < CodigoSinComentarios.length(); i++)
         {
@@ -65,11 +62,12 @@ public class Scanner {
                 case 9:
                     if (Character.isDigit(Caracter)) { estado = 12; Palabra.append(Caracter); } //Va al Automata de Digitos
                     else if(Character.isLetter(Caracter)) { estado = 10; Palabra.append(Caracter); } //Va al Automata de PalabrasReservadas o Identificadores
+                    else if (Caracter == '"') estado = 19;
                     break;
                 case 10:
                     if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11;
                     else if (Character.isLetterOrDigit(Caracter)) Palabra.append(Caracter); //Si hay una letra o digito nos quedamos en el mismo estado
-                    else estado = 19; //Detectamos si hay un espacio en blanco u otro simbolo
+                    else estado = 20; //Detectamos si hay un espacio en blanco u otro simbolo
                     break;
                 case 11:
                     NuevoLexema = Palabra.toString();
@@ -91,7 +89,7 @@ public class Scanner {
                     else if (Character.isWhitespace(Caracter) | Character.isLetter(Caracter)) estado = 18;
                     else if (Caracter == '.') { estado = 13; Palabra.append(Caracter); }
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
-                    else estado = 19;
+                    else estado = 20;
                     break;
                 case 13:
                     if (Character.isDigit(Caracter)) { estado = 14; Palabra.append(Caracter); }
@@ -100,7 +98,7 @@ public class Scanner {
                     if (Character.isDigit(Caracter)) Palabra.append(Caracter);
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
                     else if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 18;
-                    else estado = 19;
+                    else estado = 20;
                     break;
                 case 15:
                     if (Caracter == '+' | Caracter == '-') { estado = 16; Palabra.append(Caracter); }
@@ -120,6 +118,15 @@ public class Scanner {
                     Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
                     estado = 9;
                     i=retractar(i);
+                    break;
+                case 19:
+                    if (Caracter == '"'){
+                        NuevoLexema = Palabra.toString();
+                        Palabra.setLength(0);
+                        System.out.println(NuevoLexema);
+                        Tokens.add(new Token(TipoToken.CADENA,NuevoLexema,null,linea));
+                        estado = 9;
+                    }else Palabra.append(Caracter);
                     break;
                 default:
                     break;
