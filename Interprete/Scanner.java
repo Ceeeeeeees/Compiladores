@@ -51,17 +51,13 @@ public class Scanner {
         char Caracter;   
         StringBuilder Palabra = new StringBuilder();
         String NuevoLexema = null;
-        var a = 10;
-        var b = 5;
-        var c = a/b;
 
-        System.out.println(c);
+        //String CodigoSinComentarios = Codigo.replaceAll("\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/", " ");
 
-        String CodigoSinComentarios = Codigo.replaceAll("\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/", " ");
-
-        for (int i = 0; i < CodigoSinComentarios.length(); i++)
+        for (int i = 0; i < Codigo.length(); i++)
         {
-            Caracter = CodigoSinComentarios.charAt(i);
+            Caracter = Codigo.charAt(i); //CodigoSinComentarios.charAt(i);
+            //System.out.println("Estado: "+ estado);
 
             switch (estado) {
                 case 9:
@@ -78,16 +74,19 @@ public class Scanner {
                     else if (Caracter == '}') estado = 27;
                     else if (Caracter == ';') estado = 28;
                     else if (Caracter == '.') estado = 29;
+                    else if (Caracter == '<') estado = 30;
+                    else if (Caracter == '=') estado = 31;
+                    else if (Caracter == '>') estado = 33;
                     break;
                 case 10:
                     if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11; //Detectamos si hay un espacio en blanco u otro simbolo
                     else if (Character.isLetterOrDigit(Caracter)) Palabra.append(Caracter); //Si hay una letra o digito nos quedamos en el mismo estado
-                    else estado = 30;
+                    else estado = 34;
                     break;
                 case 11:
                     NuevoLexema = Palabra.toString();
                     Palabra.setLength(0);
-                    System.out.println(NuevoLexema);
+                    //System.out.println(NuevoLexema);
                     if (NuevoLexema.equals("y") | NuevoLexema.equals("clase") | NuevoLexema.equals("ademas") | NuevoLexema.equals("falso") | NuevoLexema.equals("por") |
                         NuevoLexema.equals("fun") | NuevoLexema.equals("si") | NuevoLexema.equals("nulo") | NuevoLexema.equals("o") | NuevoLexema.equals("imprimir") |
                         NuevoLexema.equals("retorno") | NuevoLexema.equals("super") | NuevoLexema.equals("este") | NuevoLexema.equals("verdadero") | NuevoLexema.equals("var") | NuevoLexema.equals("mientras"))
@@ -104,7 +103,7 @@ public class Scanner {
                     else if (Character.isWhitespace(Caracter) | Character.isLetter(Caracter)) estado = 18;
                     else if (Caracter == '.') { estado = 13; Palabra.append(Caracter); }
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
-                    else estado = 30;
+                    else estado = 34;
                     break;
                 case 13:
                     if (Character.isDigit(Caracter)) { estado = 14; Palabra.append(Caracter); }
@@ -113,7 +112,7 @@ public class Scanner {
                     if (Character.isDigit(Caracter)) Palabra.append(Caracter);
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
                     else if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 18;
-                    else estado = 30;
+                    else estado = 34;
                     break;
                 case 15:
                     if (Caracter == '+' | Caracter == '-') { estado = 16; Palabra.append(Caracter); }
@@ -129,7 +128,7 @@ public class Scanner {
                 case 18:
                     NuevoLexema = Palabra.toString();
                     Palabra.setLength(0);
-                    System.out.println(NuevoLexema);
+                    //System.out.println(NuevoLexema);
                     Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
                     estado = 9;
                     i=retractar(i);
@@ -138,7 +137,7 @@ public class Scanner {
                     if (Caracter == '"'){
                         NuevoLexema = Palabra.toString();
                         Palabra.setLength(0);
-                        System.out.println(NuevoLexema);
+                        //System.out.println(NuevoLexema);
                         Tokens.add(new Token(TipoToken.CADENA,NuevoLexema,null,linea));
                         estado = 9;
                     }else Palabra.append(Caracter);
@@ -159,9 +158,22 @@ public class Scanner {
                     estado = 9;
                     break;
                 case 23:
-                    Tokens.add(new Token(TipoToken.DIVICION,"/",null,linea));
-                    i = retractar(i);
-                    estado = 9;
+                    if ( Caracter == '/'){
+                        while (i < Codigo.length() && Codigo.charAt(i) != '\n')
+                        {
+                            i++;
+                        }
+                    } else if (Caracter == '*'){
+                        while (i + 1 < Codigo.length() && (Codigo.charAt(i) != '*' || Codigo.charAt(i + 1) != '/')){
+                            i++;
+                        }
+                        i++;
+                        estado = 9;
+                    } else {
+                        Tokens.add(new Token(TipoToken.DIVICION,"/",null,linea));
+                        i = retractar(i);
+                        estado = 9;
+                    }
                     break;
                 case 24:
                     Tokens.add(new Token(TipoToken.INPARENT,"(",null,linea));
@@ -192,6 +204,45 @@ public class Scanner {
                     Tokens.add(new Token(TipoToken.PUNTO,".",null,linea));
                     i = retractar(i);
                     estado = 9;
+                    break;
+                case 30:
+                    if (Caracter == '='){
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"<=",null,linea));
+                    }
+                    else if (Caracter == '>'){
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"<>",null,linea));
+                    }
+                    else {
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"<",null,linea));
+                        i = retractar(i);
+                    }
+                    break;
+                case 31:
+                    if (Caracter == '=') estado = 32;
+                    else {
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"=",null,linea));
+                        i = retractar(i);
+                    }
+                    break;
+                case 32:
+                    if (Character.isLetterOrDigit(Caracter)){
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"==",null,linea));
+                        i = retractar(i);
+                    }
+                case 33:
+                    if (Caracter == '=') {
+                        estado = 11;
+                        Tokens.add(new Token(TipoToken.OPREL, ">=", null, linea));
+                    } else {
+                        estado = 12;
+                        Tokens.add(new Token(TipoToken.OPREL, ">", null, linea));
+                        i = retractar(i);
+                    }
                     break;
                 default:
                     break;
