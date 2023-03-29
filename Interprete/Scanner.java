@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import mx.ipn.escom.compiladores.TipoToken;
 
 public class Scanner {
@@ -37,240 +36,225 @@ public class Scanner {
         PalabrasReservadas.put("mientras" , TipoToken.MIENTRAS);
     }
 
-    Scanner(String Codigo){
+    Scanner(String Codigo)
+    {
         this.Codigo = Codigo;
     }
 
-    int retractar (int i){ i--; return (i);}
-    List < Token > ScanTokens(){
+    int retractar (int i){ i--; return i;}
+    List < Token > ScanTokens()
+    {
 
         //Aquí va el corazón del scanner.
-<<<<<<< Updated upstream
 
         int estado = 9;
-=======
-        
-        int estado = 0;
->>>>>>> Stashed changes
-        char Caracter;   
+        char Caracter;
         StringBuilder Palabra = new StringBuilder();
         String NuevoLexema = null;
 
-        String CodigoSinComentarios = Codigo.replaceAll("\\/\\/.*|\\/\\*[\\s\\S]*?\\*\\/", " ");
+        String CodigoConFinaldeLinea = Codigo + " ";
 
-        for (int i = 0; i < CodigoSinComentarios.length(); i++)
+        for (int i = 0; i < CodigoConFinaldeLinea.length(); i++)
         {
-            Caracter = Codigo.charAt(i);
+            Caracter = CodigoConFinaldeLinea.charAt(i);
 
             switch (estado) {
-                case 0:
-<<<<<<< Updated upstream
-                    if (Character.isDigit(Caracter) == true) estado = 3;
-                    else estado = 2;
-                case 1:
-                    if (Caracter == '=') {
-                        estado = 9;
-                        Tokens.add(new Token(TipoToken.SIMBOLO, "<=", null, linea));
-                    }
-                    else if (Caracter == '>') {
-                        estado = 9;
-                        Tokens.add(new Token(TipoToken.SIMBOLO, "<>", null, linea));
-                    }
-                    else {
-                        estado = 9;
-                        Tokens.add(new Token(TipoToken.SIMBOLO, "<", null, linea));
-                        i=retractar(i);
-                    }
-                    break;
-                case 2:
-                    if (Caracter == '=') estado = 3;
-                    else {
-                        estado = 9;
-                        Tokens.add(new Token(TipoToken.SIMBOLO, "=", null, linea));
-                        i=retractar(i);
-                    }
-                    break;
-                case 3:
-                    if (Character.isLetter(Caracter)){
-                        estado = 10;
-                        Tokens.add(new Token(TipoToken.SIMBOLO, "==", null, linea));
-                        //Palabra.append(Caracter);
-                    }
-                    else if(Character.isDigit(Caracter)){
-                        estado = 12;
-                        Tokens.add(new Token(TipoToken.SIMBOLO, "==", null, linea));
-                        //Palabra.append(Caracter);
-                    }
-                    break;
-                case 4:
-                    estado = 9;
-                    if (Caracter == '=') {
-                        Tokens.add(new Token(TipoToken.SIMBOLO, ">=", null, linea));
-                    } else {
-                        Tokens.add(new Token(TipoToken.SIMBOLO, ">", null, linea));
-                        i=retractar(i);
-                    }
-                    break;
-
                 case 9:
                     if (Character.isDigit(Caracter)) { estado = 12; Palabra.append(Caracter); } //Va al Automata de Digitos
                     else if(Character.isLetter(Caracter)) { estado = 10; Palabra.append(Caracter); } //Va al Automata de PalabrasReservadas o Identificadores
-                    else if (Caracter == '<') estado = 1;
-                    else if (Caracter == '=') estado = 2;
-                    else if (Caracter == '>') estado = 4;
-                    else estado = 19;
+                    else if (Caracter == '"') estado = 19;
+                    else if (Caracter == '+') estado = 20;
+                    else if (Caracter == '-') estado = 21;
+                    else if (Caracter == '*') estado = 22;
+                    else if (Caracter == '/') estado = 23;
+                    else if (Caracter == '(') estado = 24;
+                    else if (Caracter == ')') estado = 25;
+                    else if (Caracter == '{') estado = 26;
+                    else if (Caracter == '}') estado = 27;
+                    else if (Caracter == ';') estado = 28;
+                    else if (Caracter == '.') estado = 29;
+                    else if (Caracter == '<') estado = 30;
+                    else if (Caracter == '=') estado = 31;
+                    else if (Caracter == '>') estado = 33;
+                    break;
                 case 10:
-                    if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11;
-=======
-                    if (Character.isDigit(Caracter)) { estado = 3; Palabra.append(Caracter); } //Va al Automata de Digitos
-                    else if(Character.isLetter(Caracter)) { estado = 1; Palabra.append(Caracter); } //Va al Automata de PalabrasReservadas o Identificadores
-                    else if (Caracter == '"') estado = 10;
-                    else if (Caracter == '+') estado = 11;
-                    else if (Caracter == '-') estado = 12;
-                    else if (Caracter == '*') estado = 13;
-                    else if (Caracter == '/') estado = 14;
-                    else if (Caracter == '(') estado = 15;
-                    else if (Caracter == ')') estado = 16;
-                    else if (Caracter == '{') estado = 17;
-                    else if (Caracter == '}') estado = 18;
-                    else if (Caracter == ';') estado = 19;
-                    else if (Caracter == '.') estado = 20;
-                    break;
-                case 1:
-                    if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 2; //Detectamos si hay un espacio en blanco u otro simbolo
->>>>>>> Stashed changes
+                    if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 11; //Detectamos si hay un espacio en blanco u otro simbolo
                     else if (Character.isLetterOrDigit(Caracter)) Palabra.append(Caracter); //Si hay una letra o digito nos quedamos en el mismo estado
-                    else estado = 19; //Detectamos si hay un espacio en blanco u otro simbolo
+                    else estado = 34;
                     break;
-                case 2:
+                case 11:
                     NuevoLexema = Palabra.toString();
                     Palabra.setLength(0);
-                    System.out.println(NuevoLexema);
+                    //System.out.println(NuevoLexema);
                     if (NuevoLexema.equals("y") | NuevoLexema.equals("clase") | NuevoLexema.equals("ademas") | NuevoLexema.equals("falso") | NuevoLexema.equals("por") |
-                        NuevoLexema.equals("fun") | NuevoLexema.equals("si") | NuevoLexema.equals("nulo") | NuevoLexema.equals("o") | NuevoLexema.equals("imprimir") |
-                        NuevoLexema.equals("retorno") | NuevoLexema.equals("super") | NuevoLexema.equals("este") | NuevoLexema.equals("verdadero") | NuevoLexema.equals("var") | NuevoLexema.equals("mientras"))
+                            NuevoLexema.equals("fun") | NuevoLexema.equals("si") | NuevoLexema.equals("nulo") | NuevoLexema.equals("o") | NuevoLexema.equals("imprimir") |
+                            NuevoLexema.equals("retorno") | NuevoLexema.equals("super") | NuevoLexema.equals("este") | NuevoLexema.equals("verdadero") | NuevoLexema.equals("var") | NuevoLexema.equals("mientras"))
                         for (Map.Entry<String,TipoToken>entry:PalabrasReservadas.entrySet()){
                             String palabrareservada = entry.getKey();
                             if (NuevoLexema.equals(palabrareservada)) Tokens.add(new Token(PalabrasReservadas.get(NuevoLexema),palabrareservada,null,linea));
                         }
                     else Tokens.add(new Token(TipoToken.IDENTIFICADOR,NuevoLexema,null,linea));
-                    estado = 0;
+                    estado = 9;
                     i=retractar(i);
                     break;
-                case 3:
+                case 12:
                     if (Character.isDigit(Caracter)) Palabra.append(Caracter);
                     else if (Character.isWhitespace(Caracter) | Character.isLetter(Caracter)) estado = 18;
-<<<<<<< Updated upstream
                     else if (Caracter == '.') { estado = 13; Palabra.append(Caracter); }
                     else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
-                    else estado = 19;
-=======
-                    else if (Caracter == '.') { estado = 4; Palabra.append(Caracter); }
-                    else if (Caracter == 'e' | Caracter == 'E') { estado = 6; Palabra.append(Caracter); }
-                    else estado = 30;
->>>>>>> Stashed changes
+                    else estado = 34;
                     break;
-                case 4:
-                    if (Character.isDigit(Caracter)) { estado = 5; Palabra.append(Caracter); }
+                case 13:
+                    if (Character.isDigit(Caracter)) { estado = 14; Palabra.append(Caracter); }
                     break;
-                case 5:
+                case 14:
                     if (Character.isDigit(Caracter)) Palabra.append(Caracter);
-                    else if (Caracter == 'e' | Caracter == 'E') { estado = 6; Palabra.append(Caracter); }
+                    else if (Caracter == 'e' | Caracter == 'E') { estado = 15; Palabra.append(Caracter); }
                     else if (Character.isWhitespace(Caracter) /* u otro simbolo */) estado = 18;
-                    else estado = 19;
+                    else estado = 34;
                     break;
-                case 6:
-                    if (Caracter == '+' | Caracter == '-') { estado = 7; Palabra.append(Caracter); }
-                    else if (Character.isDigit(Caracter)) { estado = 8; Palabra.append(Caracter); }
+                case 15:
+                    if (Caracter == '+' | Caracter == '-') { estado = 16; Palabra.append(Caracter); }
+                    else if (Character.isDigit(Caracter)) { estado = 17; Palabra.append(Caracter); }
                     break;
-                case 7:
-                    if (Character.isDigit(Caracter)) { estado = 8; Palabra.append(Caracter); }
+                case 16:
+                    if (Character.isDigit(Caracter)) { estado = 17; Palabra.append(Caracter); }
                     break;
-                case 8:
+                case 17:
                     if (Character.isDigit(Caracter)) Palabra.append(Caracter);
-                    else estado = 9;
+                    else estado = 18;
                     break;
-                case 9:
+                case 18:
                     NuevoLexema = Palabra.toString();
                     Palabra.setLength(0);
-                    System.out.println(NuevoLexema);
+                    //System.out.println(NuevoLexema);
                     Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
-                    estado = 0;
+                    estado = 9;
                     i=retractar(i);
                     break;
-<<<<<<< Updated upstream
-=======
-                case 10:
+                case 19:
                     if (Caracter == '"'){
                         NuevoLexema = Palabra.toString();
                         Palabra.setLength(0);
-                        System.out.println(NuevoLexema);
+                        //System.out.println(NuevoLexema);
                         Tokens.add(new Token(TipoToken.CADENA,NuevoLexema,null,linea));
-                        estado = 0;
+                        estado = 9;
                     }else Palabra.append(Caracter);
                     break;
-                case 11:
+                case 20:
                     Tokens.add(new Token(TipoToken.SUMA,"+",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 12:
+                case 21:
                     Tokens.add(new Token(TipoToken.RESTA,"-",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 13:
+                case 22:
                     Tokens.add(new Token(TipoToken.MULTIPLICACION,"*",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 14:
-                    Tokens.add(new Token(TipoToken.DIVICION,"/",null,linea));
-                    i = retractar(i);
-                    estado = 0;
+                case 23:
+                    if ( Caracter == '/'){
+                        while (i < Codigo.length() && Codigo.charAt(i) != '\n')
+                        {
+                            i++;
+                        }
+                    } else if (Caracter == '*'){
+                        while (i + 1 < Codigo.length() && (Codigo.charAt(i) != '*' || Codigo.charAt(i + 1) != '/')){
+                            i++;
+                        }
+                        i++;
+                        estado = 9;
+                    } else {
+                        Tokens.add(new Token(TipoToken.DIVICION,"/",null,linea));
+                        i = retractar(i);
+                        estado = 9;
+                    }
                     break;
-                case 15:
+                case 24:
                     Tokens.add(new Token(TipoToken.INPARENT,"(",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 16:
+                case 25:
                     Tokens.add(new Token(TipoToken.OUTPARENT,")",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 17:
+                case 26:
                     Tokens.add(new Token(TipoToken.INLLAVES,"{",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 18:
+                case 27:
                     Tokens.add(new Token(TipoToken.OUTLLAVES,"}",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 19:
+                case 28:
                     Tokens.add(new Token(TipoToken.PUNTOCOMA,";",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
-                case 20:
+                case 29:
                     Tokens.add(new Token(TipoToken.PUNTO,".",null,linea));
                     i = retractar(i);
-                    estado = 0;
+                    estado = 9;
                     break;
->>>>>>> Stashed changes
+                case 30:
+                    if (Caracter == '='){
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"<=",null,linea));
+                    }
+                    else if (Caracter == '>'){
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"<>",null,linea));
+                    }
+                    else {
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"<",null,linea));
+                        i = retractar(i);
+                    }
+                    break;
+                case 31:
+                    if (Caracter == '=') estado = 32;
+                    else {
+                        estado = 9;
+                        Tokens.add(new Token(TipoToken.OPREL,"=",null,linea));
+                        i = retractar(i);
+                    }
+                    break;
+                case 32:
+                    if (Character.isLetterOrDigit(Caracter) | Character.isWhitespace(Caracter)){
+                        Tokens.add(new Token(TipoToken.OPREL,"==",null,linea));
+                        i = retractar(i);
+                        estado = 9;
+                    }
+                    break;
+                case 33:
+                    if (Caracter == '=') {
+                        estado = 11;
+                        Tokens.add(new Token(TipoToken.OPREL, ">=", null, linea));
+                    } else {
+                        estado = 12;
+                        Tokens.add(new Token(TipoToken.OPREL, ">", null, linea));
+                        i = retractar(i);
+                    }
+                    break;
                 default:
                     break;
             }
         }
-
         /*
         Analizar el texto de entrada para extraer todos los tokens
         y al final agregar el token de fin de archivo
          */
-        Tokens.add(new Token(TipoToken.EOF, "", null, linea));
+        Tokens.add(new Token(TipoToken.EOF, "$", null, linea));
         return Tokens;
+
     }
 }
 
@@ -301,5 +285,4 @@ Identificador,
 Cadena
 Numero
 Cada palabra reservada tiene su nombre de token
-
  */
