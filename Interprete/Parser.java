@@ -12,7 +12,7 @@ public class Parser {
     private final Token Mientras = new Token(TipoToken.MIENTRAS, "mientras");
     private final Token Falso = new Token(TipoToken.FALSO, "falso");
     private final Token Por = new Token(TipoToken.POR, "por");
-    private final Token Funcion = new Token(TipoToken.FUNCION, "funcion");
+    private final Token Funcion = new Token(TipoToken.FUNCION, "fun");
     private final Token Nulo = new Token(TipoToken.NULO, "nulo");
     private final Token O = new Token(TipoToken.O, "o");
     private final Token Imprimir = new Token(TipoToken.IMPRIMIR, "imprimir");
@@ -20,7 +20,7 @@ public class Parser {
     private final Token Super = new Token(TipoToken.SUPER, "super");
     private final Token Este = new Token(TipoToken.ESTE, "este");
     private final Token Verdadero = new Token(TipoToken.VERDADERO, "verdadero");
-    private final Token Variable = new Token(TipoToken.VARIABLE, "variable");
+    private final Token Variable = new Token(TipoToken.VARIABLE, "var");
     private final Token Identificador = new Token(TipoToken.IDENTIFICADOR, "");
     private final Token Numero = new Token(TipoToken.NUMERO, "");
     private final Token Cadena = new Token(TipoToken.CADENA, "");
@@ -55,14 +55,27 @@ public class Parser {
         i = 0;
         tokenActual = tokens.get(i);
         //Funcion a la primera cadena de produccion
-        Programa();
+        Declaracion();
         if (!error && !tokenActual.equals(FinCadena)){
             System.out.println("Error: en la posicion " + tokenActual.linea + ". No se esperaba el token " + tokenActual.tipo);
         } else if (!error && tokenActual.equals(FinCadena)){
             System.out.println("Analisis sintactico exitoso");
         }
     }
-    void Programa(){
+    void Declaracion(){
+        if(tokenActual.equals(Clase)) {
+            Coincide(Clase);
+            //Conjunto siguiente
+        } else if (tokenActual.equals(Funcion)) {
+            Coincide(Funcion);
+            //Conjunto siguiente
+        } else if (tokenActual.equals(Variable)) {
+            Coincide(Variable);
+            //Conjunto siguiente
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba la Palabra Reservada 'clase' | 'var' | 'fun' .");
+        }
     }
     void Coincide(Token t){
         if(error) return;
@@ -72,7 +85,7 @@ public class Parser {
             tokenActual = tokens.get(i);
         } else {
             error = true;
-            System.out.println("Error: en la posicion " + tokenActual.linea + ". Se esperaba el token" + t.tipo);
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se esperaba el Token" + t.tipo);
         }
     }
 }
