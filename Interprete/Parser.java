@@ -65,17 +65,20 @@ public class Parser {
     void Declaracion(){
         if(tokenActual.equals(Clase)) {
             Coincide(Clase);
-            //Conjunto siguiente
+            Class_dec();
         } else if (tokenActual.equals(Funcion)) {
             Coincide(Funcion);
             //Conjunto siguiente
         } else if (tokenActual.equals(Variable)) {
             Coincide(Variable);
             //Conjunto siguiente
+        //} else if (tokenActual.equals()) {
         } else {
             error = true;
             System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba la Palabra Reservada 'clase' | 'var' | 'fun' .");
         }
+    }
+    void Class_dec(){
     }
     void Coincide(Token t){
         if(error) return;
