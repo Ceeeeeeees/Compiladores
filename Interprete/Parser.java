@@ -55,30 +55,121 @@ public class Parser {
         i = 0;
         tokenActual = tokens.get(i);
         //Funcion a la primera cadena de produccion
-        Declaracion();
+        Declaration();
         if (!error && !tokenActual.equals(FinCadena)){
             System.out.println("Error: en la posicion " + tokenActual.linea + ". No se esperaba el token " + tokenActual.tipo);
         } else if (!error && tokenActual.equals(FinCadena)){
             System.out.println("Analisis sintactico exitoso");
         }
     }
-    void Declaracion(){
+    void Declaration(){
+        if (error) return;
+
         if(tokenActual.equals(Clase)) {
-            Coincide(Clase);
             Class_dec();
+            Declaration();
         } else if (tokenActual.equals(Funcion)) {
-            Coincide(Funcion);
-            //Conjunto siguiente
+            Func_dec();
+            Declaration();
         } else if (tokenActual.equals(Variable)) {
-            Coincide(Variable);
-            //Conjunto siguiente
-        //} else if (tokenActual.equals()) {
-        } else {
-            error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba la Palabra Reservada 'clase' | 'var' | 'fun' .");
+            Var_dec();
+            Declaration();
+        } else if (tokenActual.equals(Por)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Si)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Imprimir)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Retornar)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Mientras)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(InLlaves)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Verdadero)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Falso)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Nulo)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Este)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Numero)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Cadena)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Identificador)) {
+            Statement();
+            Declaration();
+        } else if (tokenActual.equals(Super)) {
+            Statement();
+            Declaration();
         }
     }
     void Class_dec(){
+        if(tokenActual.equals(Clase)){
+            Coincide(Clase);
+            Coincide(Identificador);
+            Class_inher();
+            Coincide(InLlaves);
+            Funtions();
+            Coincide(OutLlaves);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un CLASE.");
+        }
+    }
+    void Class_inher(){
+        if(error) return;
+
+        if(tokenActual.equals(Menor)){
+            Coincide(Menor);
+            Coincide(Identificador);
+        }
+    }
+    void Func_dec(){
+        if(tokenActual.equals(Funcion)){
+            Coincide(Funcion);
+            Function();
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un FUNCION.");
+        }
+    }
+    void Var_dec(){
+        if(tokenActual.equals(Variable)){
+            Coincide(Variable);
+            Coincide(Identificador);
+            Var_init();
+            Coincide(PuntoComa);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un VAR.");
+        }
+    }
+    void Var_init(){
+        if(error) return;
+
+        if (tokenActual.equals(Asignacion)){
+            Coincide(Asignacion);
+        }
+    }
+    void Statement(){
+        if()
+    }
+    void Expr_State(){
     }
     void Coincide(Token t){
         if(error) return;
