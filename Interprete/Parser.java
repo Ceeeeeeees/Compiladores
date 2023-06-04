@@ -308,25 +308,15 @@ void Block_dec(){
         }
     }
 
-    //Cés , estoy haciendo esto
-    void Funtions()
-    {
-        if(tokenActual.equals(Funcion)){
-            Coincide(Funcion);
-            Function();
-            Funtions();
 
-        }
-        else {
-            error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una FUNCION.");
-        }
-    }
+
+    //Cés , estoy haciendo esto
 
     void Function()
     {
-        if(tokenActual.equals(Identificador))
+        if(tokenActual.equals(Funcion))
         {
+            Coincide(Funcion);
             Coincide(Identificador);
             Coincide(InParent);
             Param_opc();
@@ -342,12 +332,31 @@ void Block_dec(){
 
     }
 
+
+    void Funtions()
+    {
+        if(tokenActual.equals(Funcion)){
+            Coincide(Funcion);
+            Function();
+            Funtions();
+
+        }
+        else {
+        }
+    }
+
+
+
     void Param_opc()
     {
 
-        if (error) return;
-
-        Params_1();
+        if (tokenActual.equals(Identificador)){
+            Coincide(Identificador);
+            Params_1();
+        }
+        else {
+            //Si existe una epsilon o cadena vacía no hace nada
+        }
 
     }
 
@@ -374,8 +383,7 @@ void Block_dec(){
         }
 
         else {
-            error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un PARAMETRO.");
+            //En caso de cadena vacía no hace nada (:
         }
 
     }
@@ -383,9 +391,13 @@ void Block_dec(){
 
     void Arguments_OPC()
     {
-        if (error) return;
-
-        Arguments_1();
+        if (tokenActual.equals(InParent)){
+            Coincide(InParent);
+            Arguments_1();
+        }
+        else {
+            //En caso de cadena vacia no  hacemos nada
+        }
 
     }
 
@@ -398,6 +410,8 @@ void Block_dec(){
 
         Arguments_2();
 
+
+
     }
 
     void Arguments_2()
@@ -408,8 +422,7 @@ void Block_dec(){
             Arguments_2();
         }
         else {
-            error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una COMA.");
+           //Cadena vacía no hacemos nada
         }
 
     }
@@ -473,8 +486,7 @@ void Block_dec(){
         }
 
         else {
-            error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un O (OR).");
+           //Cadena vacía
         }
 
     }
@@ -488,8 +500,7 @@ void Block_dec(){
         }
 
         else {
-            error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un =.");
+           //Cadena vacía
         }
 
     }
@@ -573,14 +584,16 @@ void Block_dec(){
             }
             else
                 if (tokenActual.equals(Menor)){
-                    Coincide(MenorIgual);
+                    Coincide(Menor);
                     Term();
                     Compare_2();
                 }
-                else {
-                    error = true;
-                    System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OpRel ( < | > | <= | >= ) .");
-                }
+                else
+                    if (tokenActual.equals(MenorIgual)){
+                        Coincide(MenorIgual);
+                        Term();
+                        Compare_2();
+                    }
 
     }
 
@@ -608,8 +621,7 @@ void Block_dec(){
             }
 
             else {
-                error = true;
-                System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OPERADOR DE + | - .");
+               //Cadena vacía
             }
 
     }
@@ -637,10 +649,6 @@ void Block_dec(){
                 Factor_2();
             }
 
-            else {
-                error = true;
-                System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OPERADOR DE / | * .");
-            }
     }
 
 
@@ -658,13 +666,11 @@ void Block_dec(){
             {
                 Coincide(Resta);
                 Unary();
-                Call();
-                Call();
+
             }
 
             else {
-                error = true;
-                System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OPERADOR DE ! | - .");
+                Call();
             }
 
 
