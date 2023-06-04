@@ -74,46 +74,9 @@ public class Parser {
         } else if (tokenActual.equals(Variable)) {
             Var_dec();
             Declaration();
-        } else if (tokenActual.equals(Por)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Si)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Imprimir)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Retornar)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Mientras)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(InLlaves)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Verdadero)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Falso)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Nulo)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Este)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Numero)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Cadena)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Identificador)) {
-            Statement();
-            Declaration();
-        } else if (tokenActual.equals(Super)) {
+        } else if(tokenActual.equals(Por) || tokenActual.equals(Si) || tokenActual.equals(Imprimir) || tokenActual.equals(Retornar) || tokenActual.equals(Mientras)
+                || tokenActual.equals(InLlaves) || tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
+                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)){
             Statement();
             Declaration();
         }
@@ -167,9 +130,100 @@ public class Parser {
         }
     }
     void Statement(){
-        if()
+        if(tokenActual.equals(Por)){
+            For_state();
+        } else if(tokenActual.equals(Si)){
+            If_state();
+        } else if(tokenActual.equals(Imprimir)){
+            Print_state();
+        } else if(tokenActual.equals(Retornar)){
+            Return_state();
+        } else if(tokenActual.equals(Mientras)){
+            While_state();
+        } else if(tokenActual.equals(InLlaves)){
+            Block_dec();
+        } else if(tokenActual.equals(Verdadero)){
+        } else if(tokenActual.equals(Falso)){
+        } else if(tokenActual.equals(Nulo)){
+        } else if(tokenActual.equals(Este)){
+        } else if(tokenActual.equals(Numero)){
+        } else if(tokenActual.equals(Cadena)){
+        } else if(tokenActual.equals(Identificador)){
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un .");
+        }
     }
     void Expr_State(){
+    }
+    void For_state(){
+        if(tokenActual.equals(Por)){
+            Coincide(Por);
+            Coincide(InParent);
+            For_state1();
+            For_state2();
+            For_state3();
+            Coincide(OutParent);
+            Statement();
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un POR.");
+        }
+    }
+    void For_state1(){
+        if(tokenActual.equals(Variable)){
+            Var_dec();
+        } else if (tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
+                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
+            Expr_State();
+        } else if (tokenActual.equals(PuntoComa)) {
+            Coincide(PuntoComa);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un .");
+        }
+    }
+    void For_state2(){
+        if (tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
+                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
+            Expr();
+            Coincide(PuntoComa);
+        } else if (tokenActual.equals(PuntoComa)) {
+            Coincide(PuntoComa);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un .");
+        }
+    }
+    void For_state3(){
+        if (error) return;
+
+        if (tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
+                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
+            Expr();
+            Coincide(PuntoComa);
+        }
+    }
+    void If_state(){
+        if(tokenActual.equals(Si)){
+            Coincide(Si);
+            Coincide(InParent);
+            Expr();
+            Coincide(OutParent);
+            Statement();
+            Else_state();
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un SI.");
+        }
+    }
+    void Else_state(){
+        if(error) return;
+
+        if(tokenActual.equals(Sino)){
+            Coincide(Sino);
+            Statement();
+        }
     }
     void Coincide(Token t){
         if(error) return;
