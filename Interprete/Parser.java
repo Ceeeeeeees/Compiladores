@@ -9,6 +9,7 @@ public class Parser {
     private final Token Clase = new Token(TipoToken.CLASE, "clase");
     private final Token Ademas = new Token(TipoToken.ADEMAS, "ademas");
     private final Token Si = new Token(TipoToken.SI, "si");
+    private final Token Sino = new Token(TipoToken.SINO, "sino");
     private final Token Mientras = new Token(TipoToken.MIENTRAS, "mientras");
     private final Token Falso = new Token(TipoToken.FALSO, "falso");
     private final Token Por = new Token(TipoToken.POR, "por");
@@ -141,14 +142,21 @@ public class Parser {
         } else if(tokenActual.equals(Mientras)){
             While_state();
         } else if(tokenActual.equals(InLlaves)){
-            Block_dec();
+            Block();
         } else if(tokenActual.equals(Verdadero)){
+            Expr_State();
         } else if(tokenActual.equals(Falso)){
+            Expr_State();
         } else if(tokenActual.equals(Nulo)){
+            Expr_State();
         } else if(tokenActual.equals(Este)){
+            Expr_State();
         } else if(tokenActual.equals(Numero)){
+            Expr_State();
         } else if(tokenActual.equals(Cadena)){
+            Expr_State();
         } else if(tokenActual.equals(Identificador)){
+            Expr_State();
         } else {
             error = true;
             System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un .");
@@ -225,6 +233,68 @@ public class Parser {
             Statement();
         }
     }
+    void Print_state(){
+        if(tokenActual.equals(Imprimir)){
+            Coincide(Imprimir);
+            Expr();
+            Coincide(PuntoComa);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un IMPRIMIR.");
+        }
+    }
+    void Return_state(){
+        if(tokenActual.equals(Retornar)){
+            Coincide(Retornar);
+            Return_exp_opc();
+            Coincide(PuntoComa);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un RETORNAR.");
+        }
+    }
+    void Return_exp_opc(){
+        if(error) return;
+
+        if (tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
+                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
+            Expr();
+        }
+    }
+    void While_state(){
+        if(tokenActual.equals(Mientras)){
+            Coincide(Mientras);
+            Coincide(InParent);
+            Expr();
+            Coincide(OutParent);
+            Statement();
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un MIENTRAS.");
+        }
+    }
+    void Block(){
+        if(tokenActual.equals(InLlaves)){
+            Coincide(InLlaves);
+            Block_dec();
+            Coincide(OutLlaves);
+        } else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un '{'.");
+        }
+    }
+void Block_dec(){
+        if(error) return;
+
+        if(tokenActual.equals(Clase) || tokenActual.equals(Funcion) || tokenActual.equals(Verdadero) || tokenActual.equals(Falso)
+                || tokenActual.equals(Nulo) || tokenActual.equals(Este) || tokenActual.equals(Numero) || tokenActual.equals(Cadena)
+                || tokenActual.equals(Identificador) || tokenActual.equals(Super) || tokenActual.equals(Variable) || tokenActual.equals(Imprimir)
+                || tokenActual.equals(Si) || tokenActual.equals(Mientras) || tokenActual.equals(Retornar) || tokenActual.equals(InLlaves)){
+            Declaration();
+            Block_dec();
+        }
+    }
+
     void Coincide(Token t){
         if(error) return;
 

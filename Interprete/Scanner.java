@@ -25,6 +25,7 @@ public class Scanner {
         PalabrasReservadas.put("por" , TipoToken.POR );
         PalabrasReservadas.put("fun" , TipoToken.FUNCION ); //definir funciones
         PalabrasReservadas.put("si", TipoToken.SI );
+        PalabrasReservadas.put("sino" , TipoToken.SINO );
         PalabrasReservadas.put("nulo" , TipoToken.NULO );
         PalabrasReservadas.put("o" , TipoToken.O );
         PalabrasReservadas.put("imprimir" , TipoToken.IMPRIMIR );
