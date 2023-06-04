@@ -1,5 +1,6 @@
 package mx.ipn.escom.compiladores;
 
+import java.lang.reflect.Parameter;
 import java.util.List;
 
 public class Parser {
@@ -45,6 +46,11 @@ public class Parser {
     private final Token Coma = new Token(TipoToken.COMA, ",");
     private final Token FinCadena = new Token(TipoToken.EOF, "$");
 
+    //Prototipo para Unary que espera un !
+
+    private final Token Admiracion = new Token(TipoToken.Admiracion, "!");
+
+    //Revisar y/o corregir
     private int i = 0;
     private boolean error = false;
     private Token tokenActual;
@@ -95,6 +101,7 @@ public class Parser {
             System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un CLASE.");
         }
     }
+
     void Class_inher(){
         if(error) return;
 
@@ -128,6 +135,7 @@ public class Parser {
 
         if (tokenActual.equals(Asignacion)){
             Coincide(Asignacion);
+            Expr();
         }
     }
     void Statement(){
@@ -163,6 +171,11 @@ public class Parser {
         }
     }
     void Expr_State(){
+
+        if (error) return;
+
+        Expr();
+
     }
     void For_state(){
         if(tokenActual.equals(Por)){
@@ -294,6 +307,450 @@ void Block_dec(){
             Block_dec();
         }
     }
+
+    //Cés , estoy haciendo esto
+    void Funtions()
+    {
+        if(tokenActual.equals(Funcion)){
+            Coincide(Funcion);
+            Function();
+            Funtions();
+
+        }
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una FUNCION.");
+        }
+    }
+
+    void Function()
+    {
+        if(tokenActual.equals(Identificador))
+        {
+            Coincide(Identificador);
+            Coincide(InParent);
+            Param_opc();
+            Coincide(OutParent);
+            Block();
+        }
+
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una FUNCION.");
+        }
+
+
+    }
+
+    void Param_opc()
+    {
+
+        if (error) return;
+
+        Params_1();
+
+    }
+
+    void Params_1()
+    {
+        if(tokenActual.equals(Identificador))
+        {
+            Coincide(Identificador);
+            Params_2();
+        }
+
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un PARAMETRO.");
+        }
+    }
+
+    void Params_2()
+    {
+        if(tokenActual.equals(Coma)){
+            Coincide(Coma);
+            Coincide(Identificador);
+            Params_2();
+        }
+
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un PARAMETRO.");
+        }
+
+    }
+
+
+    void Arguments_OPC()
+    {
+        if (error) return;
+
+        Arguments_1();
+
+    }
+
+    void Arguments_1()
+    {
+
+        if (error) return;
+
+        Expr();
+
+        Arguments_2();
+
+    }
+
+    void Arguments_2()
+    {
+        if(tokenActual.equals(Coma)){
+            Coincide(Coma);
+            Expr();
+            Arguments_2();
+        }
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una COMA.");
+        }
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    void Expr()
+    {
+
+        if(error) return;
+
+        Assignment();
+
+    }
+
+    void Assignment()
+    {
+
+        if(error) return;
+
+        Logic_OR();
+
+        Assignment_OPC();
+
+    }
+
+    void Logic_OR()
+    {
+
+        if(error) return;
+
+        Logic_AND();
+
+        Logic_OR_2();
+
+    }
+
+    void Logic_OR_2()
+    {
+
+        if(error) return;
+
+        if (tokenActual.equals(O)){
+            Coincide(O);
+            Logic_AND();
+            Logic_OR_2();
+        }
+
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un O (OR).");
+        }
+
+    }
+
+    void Assignment_OPC()
+    {
+
+        if (tokenActual.equals(Igualacion)){
+            Coincide(Igualacion);
+            Expr();
+        }
+
+        else {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un =.");
+        }
+
+    }
+
+    void Logic_AND()
+    {
+
+        if(error) return;
+
+        Equality(); //JAJAJAJA LE IBA A PONER QUACKITY
+        Logic_AND_2();
+
+    }
+
+    void Logic_AND_2()
+    {
+
+        if(error) return;
+
+        if (tokenActual.equals(Y)){
+            Coincide(Y);
+
+            Equality();
+
+            Logic_AND_2();
+
+        }
+
+    }
+
+    void Equality()
+    {
+        if(error) return;
+
+        Compare();
+        Equality_2();
+    }
+
+    void Equality_2(){
+
+        if (tokenActual.equals(Diferente)){
+            Coincide(Diferente);
+            Compare();
+            Equality_2();
+        }
+        else
+            if (tokenActual.equals(Asignacion))
+        {
+            Coincide(Asignacion);
+            Compare();
+            Equality_2();
+
+        }
+
+    }
+
+
+    void Compare()
+    {
+
+        if(error) return;
+
+        Term();
+
+        Compare_2();
+
+    }
+
+    void Compare_2()
+    {
+        if (tokenActual.equals(Mayor)){
+            Coincide(Mayor);
+            Term();
+            Compare_2();
+        }
+        else
+            if (tokenActual.equals(MayorIgual)){
+                Coincide(MayorIgual);
+                Term();
+                Compare_2();
+            }
+            else
+                if (tokenActual.equals(Menor)){
+                    Coincide(MenorIgual);
+                    Term();
+                    Compare_2();
+                }
+                else {
+                    error = true;
+                    System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OpRel ( < | > | <= | >= ) .");
+                }
+
+    }
+
+
+    void Term()
+    {
+        if(error) return;
+
+        Factor();
+
+        Term_2();
+    }
+
+    void Term_2()
+    {
+        if (tokenActual.equals(Resta)){
+            Coincide(Resta);
+            Factor();
+            Term_2();
+        }else
+            if (tokenActual.equals(Suma)){
+                Coincide(Suma);
+                Factor();
+                Term_2();
+            }
+
+            else {
+                error = true;
+                System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OPERADOR DE + | - .");
+            }
+
+    }
+
+
+    void Factor()
+    {
+        if(error) return;
+
+        Unary();
+        Factor_2();
+    }
+
+    void Factor_2()
+    {
+        if (tokenActual.equals(Division)){
+            Coincide(Division);
+            Unary();
+            Factor_2();
+        }
+        else
+            if (tokenActual.equals(Multiplicacion)){
+                Coincide(Multiplicacion);
+                Unary();
+                Factor_2();
+            }
+
+            else {
+                error = true;
+                System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OPERADOR DE / | * .");
+            }
+    }
+
+
+    void Unary()
+    {
+        //Tengo duda respecto a esto
+        if (tokenActual.equals(Admiracion)){
+            Coincide(Admiracion);
+
+            Unary();
+
+        }
+        else
+            if (tokenActual.equals(Resta))
+            {
+                Coincide(Resta);
+                Unary();
+                Call();
+                Call();
+            }
+
+            else {
+                error = true;
+                System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba algun OPERADOR DE ! | - .");
+            }
+
+
+    }
+
+    void Call()
+    {
+        if(error) return;
+
+        Primary();
+
+        Call_2();
+
+    }
+
+    void Call_2()
+    {
+        if (tokenActual.equals(InParent))
+        {
+            Coincide(InParent);
+
+            Arguments_OPC();
+
+            Coincide(OutParent);
+
+            Call_2();
+        }
+    }
+
+    void Primary()
+    {
+        if (tokenActual.equals(Verdadero))
+        {
+
+            Coincide(Verdadero);
+
+        }
+        else
+            if (tokenActual.equals(Falso)){
+                Coincide(Falso);
+            }
+            else
+                if (tokenActual.equals(Nulo)){
+                    Coincide(Nulo);
+                }
+                else
+                    if (tokenActual.equals(Este)){
+                        Coincide(Este);
+                    }
+                    else
+                        if (tokenActual.equals(Numero)){
+                            Coincide(Numero);
+                        }
+                        else
+                            if (tokenActual.equals(Cadena)){
+                                Coincide(Cadena);
+                            }
+                            else
+                                if (tokenActual.equals(Identificador)){
+                                    Coincide(Identificador);
+                                }
+                                else
+                                    if (tokenActual.equals(InParent)){
+                                        Coincide(InParent);
+                                        Expr();
+                                        Coincide(OutParent);
+                                    }
+                                    else
+                                        if (tokenActual.equals(Super)){
+                                            Coincide(Super);
+                                            Coincide(Punto);
+                                            Coincide(Identificador);
+                                        }
+                                        else {
+                                            error = true;
+                                            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba otra cosa");
+                                        }
+
+    }
+
+
+
+
+
+
+    // Aqui acabe lo que hice
 
     void Coincide(Token t){
         if(error) return;
