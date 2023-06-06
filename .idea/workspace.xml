@@ -32,6 +32,7 @@
     <configuration name="Compiladores" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="mx.ipn.escom.compiladores.Interprete" />
       <module name="Compiladores-" />
+      <option name="PROGRAM_PARAMETERS" value="C:\Users\cesar\OneDrive\Documentos\GitHub\prueba_2.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

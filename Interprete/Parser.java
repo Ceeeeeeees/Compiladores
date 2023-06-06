@@ -208,7 +208,7 @@ public class Parser {
             Coincide(PuntoComa);
         } else {
             error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un .");
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una Variable o una Expresion o ' ; '.");
         }
     }
     void For_state2(){
@@ -220,7 +220,7 @@ public class Parser {
             Coincide(PuntoComa);
         } else {
             error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un .");
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un expresion o un ' ; '.");
         }
     }
     void For_state3(){
@@ -229,7 +229,7 @@ public class Parser {
         if (tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
                 || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
             Expr();
-            Coincide(PuntoComa);
+
         }
     }
     void If_state(){
