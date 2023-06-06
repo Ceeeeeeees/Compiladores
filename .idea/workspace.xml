@@ -63,7 +63,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/Interprete/Parser.java</url>
-          <line>60</line>
+          <line>59</line>
           <properties class="mx.ipn.escom.compiladores.Parser" method="parse">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
@@ -72,7 +72,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/Interprete/Parser.java</url>
-          <line>71</line>
+          <line>70</line>
           <properties class="mx.ipn.escom.compiladores.Parser" method="Declaration">
             <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />

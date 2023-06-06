@@ -1,6 +1,5 @@
 package mx.ipn.escom.compiladores;
 
-import java.lang.reflect.Parameter;
 import java.util.List;
 
 public class Parser {
@@ -182,6 +181,7 @@ public class Parser {
         if (error) return;
 
         Expr();
+        Coincide(PuntoComa);
 
     }
     void For_state(){
@@ -458,13 +458,10 @@ void Block_dec(){
 
     }
 
-    void Logic_OR()
-    {
-
+    void Logic_OR() {
         if(error) return;
 
         Logic_AND();
-
         Logic_OR_2();
 
     }
@@ -480,24 +477,16 @@ void Block_dec(){
             Logic_OR_2();
         }
 
-        else {
-           //Cadena vacía
-        }
-
     }
 
     void Assignment_OPC()
     {
+        if(error) return;
 
         if (tokenActual.equals(Igualacion)){
             Coincide(Igualacion);
             Expr();
         }
-
-        else {
-           //Cadena vacía
-        }
-
     }
 
     void Logic_AND()
@@ -536,15 +525,17 @@ void Block_dec(){
 
     void Equality_2(){
 
+        if(error) return;
+
         if (tokenActual.equals(Diferente)){
             Coincide(Diferente);
             Compare();
             Equality_2();
         }
         else
-            if (tokenActual.equals(Asignacion))
+            if (tokenActual.equals(Igualacion))
         {
-            Coincide(Asignacion);
+            Coincide(Igualacion);
             Compare();
             Equality_2();
 
@@ -556,7 +547,7 @@ void Block_dec(){
     void Compare()
     {
 
-        if(error) return;
+        //Imprimir que faltaba : true, false, null, this, number, string, id, super
 
         Term();
 
@@ -566,6 +557,8 @@ void Block_dec(){
 
     void Compare_2()
     {
+        if(error) return;
+
         if (tokenActual.equals(Mayor)){
             Coincide(Mayor);
             Term();
@@ -595,7 +588,7 @@ void Block_dec(){
 
     void Term()
     {
-        if(error) return;
+        //Hacer un else de conjuntp primero de Term
 
         Factor();
 
@@ -604,6 +597,8 @@ void Block_dec(){
 
     void Term_2()
     {
+        if (error) return;
+
         if (tokenActual.equals(Resta)){
             Coincide(Resta);
             Factor();
@@ -615,16 +610,13 @@ void Block_dec(){
                 Term_2();
             }
 
-            else {
-               //Cadena vacía
-            }
 
     }
 
 
     void Factor()
     {
-        if(error) return;
+        //  Else de que faltaba arg
 
         Unary();
         Factor_2();
@@ -632,6 +624,8 @@ void Block_dec(){
 
     void Factor_2()
     {
+        if(error) return;
+
         if (tokenActual.equals(Division)){
             Coincide(Division);
             Unary();
@@ -650,39 +644,50 @@ void Block_dec(){
     void Unary()
     {
         //Tengo duda respecto a esto
-        if (tokenActual.equals(Admiracion)){
-            Coincide(Admiracion);
+        if (tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este) || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)){
+            Call();
+        }else
+            if (tokenActual.equals(Admiracion)){
+                Coincide(Admiracion);
 
-            Unary();
-
-        }
-        else
-            if (tokenActual.equals(Resta))
-            {
-                Coincide(Resta);
                 Unary();
 
             }
+            else
+                if (tokenActual.equals(Resta))
+                {
+                    Coincide(Resta);
+                    Unary();
 
-            else {
-                Call();
-            }
-
+                }
 
     }
 
     void Call()
     {
-        if(error) return;
+//Espero más cosas y error
+        if (
+                tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) ||
+                tokenActual.equals(Este) || tokenActual.equals(Numero) || tokenActual.equals(Cadena) ||
+                tokenActual.equals(Identificador) || tokenActual.equals(Super)
+        ){
 
-        Primary();
+            Primary();
+            Call_2();
 
-        Call_2();
+        }else{
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un \tVerdadero || Falso || NULO || ESTE || NUMERO || CADENA || IDENTIFICADOR || SUPER .");
+        }
+
+
 
     }
 
     void Call_2()
     {
+        if(error) return;
+
         if (tokenActual.equals(InParent))
         {
             Coincide(InParent);
@@ -693,6 +698,13 @@ void Block_dec(){
 
             Call_2();
         }
+        else
+            if(tokenActual.equals(Punto)){
+                Coincide(Punto);
+                Coincide(Identificador);
+                Call_2();
+            }
+        //Realizar else
     }
 
     void Primary()
