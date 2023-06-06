@@ -410,6 +410,8 @@ void Block_dec(){
 
     void Arguments_2()
     {
+        if(error) return;
+
         if(tokenActual.equals(Coma)){
             Coincide(Coma);
             Expr();
@@ -545,12 +547,16 @@ void Block_dec(){
 
     void Compare()
     {
-
-        //Imprimir que faltaba : true, false, null, this, number, string, id, super
-
-        Term();
-
-        Compare_2();
+        if(tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) ||
+        tokenActual.equals(Este) || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
+            //Imprimir que faltaba : true, false, null, this, number, string, id, super
+            Term();
+            Compare_2();
+        } else
+        {
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un \t'VERDADERO' , 'FALSO' , 'NULO' , 'ESTE', algun 'NUMERO' , alguna 'CADENA' , un 'IDENTIFICADOR' o un 'SUPER'.");
+        }
 
     }
 
@@ -587,11 +593,17 @@ void Block_dec(){
 
     void Term()
     {
-        //Hacer un else de conjuntp primero de Term
+        if(tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) ||
+                tokenActual.equals(Este) || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
 
-        Factor();
+            Factor();
+            Term_2();
+        }
+        else{
+            error = true;
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un \t'VERDADERO' , 'FALSO' , 'NULO' , 'ESTE', algun 'NUMERO' , alguna 'CADENA' , un 'IDENTIFICADOR' o un 'SUPER'.");
+        }
 
-        Term_2();
     }
 
     void Term_2()
@@ -608,17 +620,19 @@ void Block_dec(){
                 Factor();
                 Term_2();
             }
-
-
     }
 
 
     void Factor()
     {
-        //  Else de que faltaba arg
+        if(tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) ||
+                tokenActual.equals(Este) || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super) || tokenActual.equals(Resta) || tokenActual.equals(Admiracion))
+        {
+            Unary();
+            Factor_2();
 
-        Unary();
-        Factor_2();
+        }
+
     }
 
     void Factor_2()
