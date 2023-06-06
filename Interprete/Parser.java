@@ -387,11 +387,10 @@ void Block_dec(){
 
     void Arguments_OPC()
     {
+        if(error) return;
+
         if (tokenActual.equals(InParent)){
             Arguments_1();
-        }
-        else {
-            //En caso de cadena vacia no  hacemos nada
         }
 
     }
