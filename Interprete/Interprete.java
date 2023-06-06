@@ -49,12 +49,13 @@ public class Interprete {
     private static void ejecutar(String source){
         Scanner scanner = new Scanner(source);
         List<Token> tokens = scanner.ScanTokens();
-        Parser parser = new Parser(tokens);
-        parser.parse();
 
         /*for(Token token : tokens){
             System.out.println(token);
         }*/
+
+        Parser parser = new Parser(tokens);
+        parser.parse();
     }
 
     /*

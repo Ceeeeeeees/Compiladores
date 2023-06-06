@@ -70,23 +70,30 @@ public class Parser {
         }
     }
     void Declaration(){
-        if (error) return;
+       if (error) return;
 
-        if(tokenActual.equals(Clase)) {
+       if(tokenActual.equals(Clase)) {
+
             Class_dec();
             Declaration();
         } else if (tokenActual.equals(Funcion)) {
+
             Func_dec();
             Declaration();
         } else if (tokenActual.equals(Variable)) {
+
             Var_dec();
             Declaration();
-        } else if(tokenActual.equals(Por) || tokenActual.equals(Si) || tokenActual.equals(Imprimir) || tokenActual.equals(Retornar) || tokenActual.equals(Mientras)
+
+        } else
+            if(tokenActual.equals(Por) || tokenActual.equals(Si) || tokenActual.equals(Imprimir) || tokenActual.equals(Retornar) || tokenActual.equals(Mientras)
                 || tokenActual.equals(InLlaves) || tokenActual.equals(Verdadero) || tokenActual.equals(Falso) || tokenActual.equals(Nulo) || tokenActual.equals(Este)
-                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)){
-            Statement();
-            Declaration();
+                || tokenActual.equals(Numero) || tokenActual.equals(Cadena) || tokenActual.equals(Identificador) || tokenActual.equals(Super)) {
+                Statement();
+                Declaration();
+
         }
+
     }
     void Class_dec(){
         if(tokenActual.equals(Clase)){
@@ -314,19 +321,17 @@ void Block_dec(){
 
     void Function()
     {
-        if(tokenActual.equals(Funcion))
+        if(tokenActual.equals(Identificador))
         {
-            Coincide(Funcion);
             Coincide(Identificador);
             Coincide(InParent);
             Param_opc();
             Coincide(OutParent);
             Block();
         }
-
         else {
             error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba una FUNCION.");
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un IDENTIFICADOR.");
         }
 
 
@@ -335,27 +340,20 @@ void Block_dec(){
 
     void Funtions()
     {
-        if(tokenActual.equals(Funcion)){
-            Coincide(Funcion);
+        if(error) return;
+
+        if(tokenActual.equals(Identificador)){
             Function();
             Funtions();
-
-        }
-        else {
         }
     }
 
-
-
     void Param_opc()
     {
+        if(error) return;
 
         if (tokenActual.equals(Identificador)){
-            Coincide(Identificador);
             Params_1();
-        }
-        else {
-            //Si existe una epsilon o cadena vacía no hace nada
         }
 
     }
@@ -370,20 +368,18 @@ void Block_dec(){
 
         else {
             error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un PARAMETRO.");
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se Esperaba un IDENTIFICADOR.");
         }
     }
 
     void Params_2()
     {
+        if(error) return;
+
         if(tokenActual.equals(Coma)){
             Coincide(Coma);
             Coincide(Identificador);
             Params_2();
-        }
-
-        else {
-            //En caso de cadena vacía no hace nada (:
         }
 
     }
@@ -392,7 +388,6 @@ void Block_dec(){
     void Arguments_OPC()
     {
         if (tokenActual.equals(InParent)){
-            Coincide(InParent);
             Arguments_1();
         }
         else {
@@ -766,7 +761,7 @@ void Block_dec(){
             tokenActual = tokens.get(i);
         } else {
             error = true;
-            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se esperaba el Token" + t.tipo);
+            System.out.println("Error: en la Posicion " + tokenActual.linea + ". Se esperaba el Token " + t.tipo);
         }
     }
 }

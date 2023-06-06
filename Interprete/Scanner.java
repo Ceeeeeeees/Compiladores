@@ -29,7 +29,7 @@ public class Scanner {
         PalabrasReservadas.put("nulo" , TipoToken.NULO );
         PalabrasReservadas.put("o" , TipoToken.O );
         PalabrasReservadas.put("imprimir" , TipoToken.IMPRIMIR );
-        PalabrasReservadas.put("retorno" , TipoToken.RETORNAR );
+        PalabrasReservadas.put("retornar" , TipoToken.RETORNAR );
         PalabrasReservadas.put("super", TipoToken.SUPER);
         PalabrasReservadas.put("este" , TipoToken.ESTE);
         PalabrasReservadas.put("verdadero" , TipoToken.VERDADERO);
