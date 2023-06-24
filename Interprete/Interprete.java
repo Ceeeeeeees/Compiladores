@@ -56,6 +56,18 @@ public class Interprete {
 
         Parser parser = new Parser(tokens);
         parser.parse();
+
+
+        Postfija gpf = new Postfija(tokens);
+        List<Token> postfija = gpf.Convertir();
+
+        for(Token token : postfija){
+            System.out.println(token);
+        }
+
+        AST gast = new AST(postfija);
+        Arbol programa = gast.generarAST();
+        programa.recorrer();
     }
 
     /*
