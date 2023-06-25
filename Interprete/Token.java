@@ -25,6 +25,7 @@ public class Token {
         switch (this.tipo){
             case IDENTIFICADOR:
             case NUMERO:
+            case CADENA: //Tengo mis dudas
                 return true;
             default:
                 return false;
@@ -38,6 +39,8 @@ public class Token {
             case MULTIPLICACION:
             case DIVICION:
             case OPREL:
+            case O:
+            case Y:
                 return true;
             default:
                 return false;
@@ -89,22 +92,39 @@ public class Token {
         switch (this.tipo){
             case SUMA:
             case RESTA:
-                return 2;
+                return 6;
             case MULTIPLICACION:
             case DIVICION:
-                return 3;
+                return 7;
             case OPREL:
-                return 1;
+                switch (this.lexema){
+                    case "<":
+                    case ">":
+                    case "<=":
+                    case ">=":
+                        return 5;
+                    case "==":
+                    case "<>":
+                        return 4;
+                    case "=":
+                        return 1;
+                }
+            case O:
+                return 2;
+            case Y:
+                return 3;
         }
         return 0;
     }
 
-    public int Airdad(){
+    public int Aridad(){
         switch (this.tipo){
             case SUMA:
             case RESTA:
             case MULTIPLICACION:
             case DIVICION:
+            case O:
+            case Y:
             case OPREL:
                 return 2;
         }

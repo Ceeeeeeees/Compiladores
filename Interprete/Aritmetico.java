@@ -15,10 +15,11 @@ public class Aritmetico {
         //No tiene hijo, es un operando
         if(n.getHijos() == null){
             if(n.getToken().tipo == TipoToken.NUMERO || n.getToken().tipo == TipoToken.CADENA){
-                return n.getToken().literal;
+                return n.getToken().lexema; //segun yo es el lexema que debe de regresar (n.getToken().literal)
             } else if (n.getToken().tipo == TipoToken.IDENTIFICADOR){
                 //Buscar en la tabla de simbolos
-
+                TablaSimbolos tablaSimbolos = new  TablaSimbolos();
+                return tablaSimbolos.ObtenerValor(n.getToken().lexema);
             }
         }
 
@@ -42,10 +43,11 @@ public class Aritmetico {
             }
         } else if (ResultadoIzquierda instanceof String && ResultadoDerecha instanceof String){
             if (n.getToken().tipo == TipoToken.SUMA){
-                //Ejecutar concatenacion
+                return ((String)ResultadoIzquierda + (String)ResultadoDerecha);
             }
         } else {
-            //Error semantico (por diferencias de tipos
+            //Error semantico (por diferencias de tipos)
+            System.out.println("Error semantico. Los Operandos" + ResultadoIzquierda + " y " + ResultadoDerecha + " no son del mismo tipo");
         }
 
         return null;

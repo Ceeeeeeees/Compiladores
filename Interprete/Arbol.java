@@ -14,6 +14,36 @@ public class Arbol {
             Token token = n.getToken();
             switch (token.tipo){
                 //Tipos de Tokens
+                case SUMA:
+                case RESTA:
+                case MULTIPLICACION:
+                case DIVICION:
+                    //Operadores Aritmeticos
+                    Aritmetico solver = new Aritmetico(n);
+                    Object resultado = solver.resolver();
+                    System.out.println(resultado);
+                    break;
+                case OPREL:
+                    //Operadores Relacionales
+                    break;
+                case O:
+                case Y:
+                    //Operadores Logicos
+                    break;
+                case VARIABLE:
+                    //Crear variable
+                    //Usar la tabla de simbolos
+                    break;
+                case IMPRIMIR:
+                    //Imprimir sentencia
+                    //Usar la tabla de simbolos
+                    break;
+                case SI:
+                case SINO:
+                case MIENTRAS:
+                case POR:
+                    //Estructuras de control
+                    break;
             }
         }
     }
