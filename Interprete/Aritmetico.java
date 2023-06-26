@@ -3,22 +3,20 @@ package mx.ipn.escom.compiladores;
 public class Aritmetico {
     private final Nodo nodo;
 
-    public Aritmetico(Nodo nodo){
+    public Aritmetico(Nodo nodo) {
         this.nodo = nodo;
     }
 
-    public Object resolver(){
+    public Object resolver() {
         return resolver(nodo);
     }
 
-    public Object resolver(Nodo n){
-        //No tiene hijo, es un operando
-        if(n.getHijos() == null){
-            if(n.getToken().tipo == TipoToken.NUMERO || n.getToken().tipo == TipoToken.CADENA){
-                return n.getToken().lexema; //segun yo es el lexema que debe de regresar (n.getToken().literal)
-            } else if (n.getToken().tipo == TipoToken.IDENTIFICADOR){
-                //Buscar en la tabla de simbolos
-                TablaSimbolos tablaSimbolos = new  TablaSimbolos();
+    public Object resolver(Nodo n) {
+        if (n.getHijos() == null) {
+            if (n.getToken().tipo == TipoToken.NUMERO || n.getToken().tipo == TipoToken.CADENA) {
+                return n.getToken().lexema;
+            } else if (n.getToken().tipo == TipoToken.IDENTIFICADOR) {
+                TablaSimbolos tablaSimbolos = new TablaSimbolos();
                 return tablaSimbolos.ObtenerValor(n.getToken().lexema);
             }
         }
@@ -30,26 +28,87 @@ public class Aritmetico {
         Object ResultadoIzquierda = resolver(izquierda);
         Object ResultadoDerecha = resolver(derecha);
 
-        if(ResultadoIzquierda instanceof Double && ResultadoDerecha instanceof Double){
-            switch (n.getToken().tipo){
+        if (ResultadoIzquierda instanceof Double && ResultadoDerecha instanceof Double) {
+            double valorIzquierda = (Double) ResultadoIzquierda;
+            double valorDerecha = (Double) ResultadoDerecha;
+
+            switch (n.getToken().tipo) {
                 case SUMA:
-                    return ((Double)ResultadoIzquierda + (Double)ResultadoDerecha);
+                    return valorIzquierda + valorDerecha;
                 case RESTA:
-                    return ((Double)ResultadoIzquierda - (Double)ResultadoDerecha);
+                    return valorIzquierda - valorDerecha;
                 case MULTIPLICACION:
-                    return ((Double)ResultadoIzquierda * (Double)ResultadoDerecha);
+                    return valorIzquierda * valorDerecha;
                 case DIVICION:
-                    return ((Double)ResultadoIzquierda / (Double)ResultadoDerecha);
+                    if (valorDerecha != 0) {
+                        return valorIzquierda / valorDerecha;
+                    } else {
+                        System.out.println("Error: División entre cero.");
+                        return null;
+                    }
+                case OPREL:
+                    return evaluarOpeRel(n.getToken().lexema, valorIzquierda, valorDerecha);
+
+                case O:
+                    if (valorIzquierda != 0 || valorDerecha != 0) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
+
+                case Y:
+
+                    if (valorIzquierda == 1 && valorDerecha == 1) {
+                        return 1;
+                    } else {
+                        return 0;
+                    }
             }
-        } else if (ResultadoIzquierda instanceof String && ResultadoDerecha instanceof String){
-            if (n.getToken().tipo == TipoToken.SUMA){
-                return ((String)ResultadoIzquierda + (String)ResultadoDerecha);
+
+
+        } else if (ResultadoIzquierda instanceof String && ResultadoDerecha instanceof String) {
+            String valorIzquierda = (String) ResultadoIzquierda;
+            String valorDerecha = (String) ResultadoDerecha;
+
+            if (n.getToken().tipo == TipoToken.SUMA) {
+                return valorIzquierda + valorDerecha;
             }
         } else {
-            //Error semantico (por diferencias de tipos)
-            System.out.println("Error semantico. Los Operandos" + ResultadoIzquierda + " y " + ResultadoDerecha + " no son del mismo tipo");
+            System.out.println("Error semántico: Los operandos " + ResultadoIzquierda + " y " + ResultadoDerecha + " no son del mismo tipo.");
+            return null;
         }
 
         return null;
     }
+
+    public Object evaluarOpeRel (String lexema , Object valorIzquierda, Object valorDerecha){
+
+        if (valorIzquierda instanceof Double && valorDerecha instanceof Double) {
+            double valorIzq = (Double) valorIzquierda;
+            double valorDer = (Double) valorDerecha;
+
+            switch (lexema) {
+                case "<":
+                    return valorIzq < valorDer;
+                case ">":
+                    return valorIzq > valorDer;
+                case "<=":
+                    return valorIzq <= valorDer;
+                case ">=":
+                    return valorIzq >= valorDer;
+                case "==":
+                    return valorIzq == valorDer;
+                case "<>":
+                    return valorIzq != valorDer;
+                default:
+                    System.out.println("Error: Operador relacional no reconocido.");
+                    return null;
+            }
+        } else {
+            System.out.println("Error semántico: Los operandos de un operador relacional deben ser de tipo numérico.");
+            System.out.println("Error semántico: Los operandos " + valorIzquierda + " y " + valorDerecha + " no son del tipo númerico");
+            return null;
+        }
+    }
+
 }
