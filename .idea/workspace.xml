@@ -67,7 +67,7 @@
       <updated>1680127442224</updated>
       <workItem from="1687636795325" duration="5679000" />
       <workItem from="1687722988903" duration="4667000" />
-      <workItem from="1687881421694" duration="10669000" />
+      <workItem from="1687881421694" duration="13017000" />
     </task>
     <servers />
   </component>
@@ -91,11 +91,6 @@
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
           <line>31</line>
           <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Interprete/GeneradorAST.java</url>
-          <line>92</line>
-          <option name="timeStamp" value="20" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

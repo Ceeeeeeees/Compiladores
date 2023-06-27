@@ -30,27 +30,33 @@ public class Arbol {
                 case VARIABLE:
                     // Crear una variable. Usar tabla de simbolos
                     Nodo identificador = n.getHijos().get(0);
-                    Nodo valor = n.getHijos().get(1);
 
                     if (tablaSimbolos.ExisteIdentificador(identificador.getValue().lexema)){
                         System.out.println("Error: Variable Duplicada.");
                         throw new RuntimeException("Variable Ya Definida: " + identificador.getValue().lexema);
                     }
 
-                    if(valor == null){
+                    if(n.getHijos().size() == 1){
                         tablaSimbolos.Asignar(identificador.getValue().lexema, null);
                     }else{
-                       if (valor.getValue().tipo == TipoToken.NUMERO){
-                           tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().literal);
-                       } else if (valor.getValue().tipo == TipoToken.CADENA){
-                           tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().lexema);
-                       } else if (valor.getValue().tipo == TipoToken.IDENTIFICADOR){
-                           tablaSimbolos.Asignar(identificador.getValue().lexema, tablaSimbolos.ObtenerValor(valor.getValue().lexema));
-                       } else if (valor.getValue().tipo == TipoToken.VERDADERO || valor.getValue().tipo == TipoToken.FALSO){
-                           tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().lexema);
-                       } else {
-                           throw new RuntimeException("Tipo de dato no válido: " + valor.getValue().lexema);
-                       }
+                        for (int i = 1; i < n.getHijos().size(); i++){
+                            Nodo valor = n.getHijos().get(i);
+                            if (valor.getValue().tipo == TipoToken.NUMERO){
+                                tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().literal);
+                            } else if (valor.getValue().tipo == TipoToken.CADENA){
+                                tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().lexema);
+                            } else if (valor.getValue().tipo == TipoToken.IDENTIFICADOR){
+                                tablaSimbolos.Asignar(identificador.getValue().lexema, tablaSimbolos.ObtenerValor(valor.getValue().lexema));
+                            } else if (valor.getValue().tipo == TipoToken.VERDADERO || valor.getValue().tipo == TipoToken.FALSO){
+                                tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().lexema);
+                            } else if (valor.getValue().tipo == TipoToken.SUMA || valor.getValue().tipo == TipoToken.RESTA || valor.getValue().tipo == TipoToken.MULTIPLICACION || valor.getValue().tipo == TipoToken.DIVICION || valor.getValue().tipo == TipoToken.OPREL || valor.getValue().tipo == TipoToken.Y || valor.getValue().tipo == TipoToken.O){
+                                Aritmetico solverVariable = new Aritmetico(valor, this.tablaSimbolos);
+                                Object resultadoVariable = solverVariable.resolver();
+                                tablaSimbolos.Asignar(identificador.getValue().lexema, resultadoVariable);
+                            } else {
+                                throw new RuntimeException("Tipo de dato no válido: " + valor.getValue().lexema);
+                            }
+                        }
                     }
                     break;
                 case SI:

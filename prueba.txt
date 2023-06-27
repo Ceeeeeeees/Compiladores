@@ -1,19 +1,30 @@
-var var1 = 5;
-var edad = 3;
+imprimir "Prueba 1";
 
-var1 + 5 <= edad - 18;
+var nombre = "Juan";
+var apellido = "Perez";
+imprimir nombre + " " + apellido;
 
-var var2 = verdadero;
-var var3 = falso;
+imprimir "Prueba 2";
 
-var var4 = "Hola";
-var var5 = "Mundo";
+var nombre2 = "Maria";
+var apellido2 = "Gomez";
+imprimir nombre2 + " " + apellido2 + edad;
 
-imprimir var4;
+imprimir "Prueba 3";
 
-imprimir var5;
+var radio = 5;
+var area = pi * radio * radio;
+imprimir "El area es: ";
+imprimir area;
 
-imprimir var4 + " " + var5;
+imprimir "Prueba 4";
 
+var radio2 = 10;
+var pi = 3.1416;
+var area2 = pi * radio2 * radio2;
+imprimir "El area es: ";
+imprimir area2;
+
+imprimir "Prueba 5";
 
 
