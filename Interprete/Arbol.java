@@ -49,7 +49,7 @@ public class Arbol {
                        } else if (valor.getValue().tipo == TipoToken.VERDADERO || valor.getValue().tipo == TipoToken.FALSO){
                            tablaSimbolos.Asignar(identificador.getValue().lexema, valor.getValue().lexema);
                        } else {
-                           throw new RuntimeException("Tipo de dato no válido: " + valor);
+                           throw new RuntimeException("Tipo de dato no válido: " + valor.getValue().lexema);
                        }
                     }
                     break;
@@ -60,6 +60,11 @@ public class Arbol {
                     break;
 
                 case IMPRIMIR:
+                    for (Nodo bijo : n.getHijos()){
+                        Aritmetico solverImprimir = new Aritmetico(bijo, this.tablaSimbolos);
+                        Object resultado = solverImprimir.resolver();
+                        System.out.println("Resultado del imprimir: " + resultado);
+                    }
                     break;
 
                 case POR:
