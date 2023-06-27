@@ -13,11 +13,11 @@ public class Aritmetico {
 
     public Object resolver(Nodo n) {
         if (n.getHijos() == null) {
-            if (n.getToken().tipo == TipoToken.NUMERO || n.getToken().tipo == TipoToken.CADENA) {
-                return n.getToken().lexema;
-            } else if (n.getToken().tipo == TipoToken.IDENTIFICADOR) {
+            if (n.getValue().tipo == TipoToken.NUMERO || n.getValue().tipo == TipoToken.CADENA) {
+                return n.getValue().lexema;
+            } else if (n.getValue().tipo == TipoToken.IDENTIFICADOR) {
                 TablaSimbolos tablaSimbolos = new TablaSimbolos();
-                return tablaSimbolos.ObtenerValor(n.getToken().lexema);
+                return tablaSimbolos.ObtenerValor(n.getValue().lexema);
             }
         }
 
@@ -32,7 +32,7 @@ public class Aritmetico {
             double valorIzquierda = (Double) ResultadoIzquierda;
             double valorDerecha = (Double) ResultadoDerecha;
 
-            switch (n.getToken().tipo) {
+            switch (n.getValue().tipo) {
                 case SUMA:
                     return valorIzquierda + valorDerecha;
                 case RESTA:
@@ -47,21 +47,21 @@ public class Aritmetico {
                         return null;
                     }
                 case OPREL:
-                    return evaluarOpeRel(n.getToken().lexema, valorIzquierda, valorDerecha);
+                    return evaluarOpeRel(n.getValue().lexema, valorIzquierda, valorDerecha);
 
                 case O:
                     if (valorIzquierda != 0 || valorDerecha != 0) {
-                        return 1;
+                        return true;
                     } else {
-                        return 0;
+                        return false;
                     }
 
                 case Y:
 
                     if (valorIzquierda == 1 && valorDerecha == 1) {
-                        return 1;
+                        return true;
                     } else {
-                        return 0;
+                        return false;
                     }
             }
 
@@ -70,7 +70,7 @@ public class Aritmetico {
             String valorIzquierda = (String) ResultadoIzquierda;
             String valorDerecha = (String) ResultadoDerecha;
 
-            if (n.getToken().tipo == TipoToken.SUMA) {
+            if (n.getValue().tipo == TipoToken.SUMA) {
                 return valorIzquierda + valorDerecha;
             }
         } else {
@@ -89,23 +89,23 @@ public class Aritmetico {
 
             switch (lexema) {
                 case "<":
-                    return valorIzq < valorDer;
+                    return (Boolean) (valorIzq < valorDer);
                 case ">":
-                    return valorIzq > valorDer;
+                    return (Boolean) (valorIzq > valorDer);
                 case "<=":
-                    return valorIzq <= valorDer;
+                    return (Boolean) (valorIzq <= valorDer);
                 case ">=":
-                    return valorIzq >= valorDer;
+                    return (Boolean) (valorIzq >= valorDer);
                 case "==":
-                    return valorIzq == valorDer;
+                    return (Boolean) (valorIzq == valorDer);
                 case "<>":
-                    return valorIzq != valorDer;
+                    return (Boolean) (valorIzq != valorDer);
                 default:
                     System.out.println("Error: Operador relacional no reconocido.");
                     return null;
             }
         } else {
-            System.out.println("Error semántico: Los operandos de un operador relacional deben ser de tipo numérico.");
+            //System.out.println("Error semántico: Los operandos de un operador relacional deben ser de tipo numérico.");
             System.out.println("Error semántico: Los operandos " + valorIzquierda + " y " + valorDerecha + " no son del tipo númerico");
             return null;
         }

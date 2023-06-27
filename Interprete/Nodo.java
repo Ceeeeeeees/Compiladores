@@ -1,46 +1,48 @@
 package mx.ipn.escom.compiladores;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
+
 public class Nodo {
-    private final Token token;
+    private final Token value;
     private List<Nodo> hijos;
 
-    public Nodo(Token token){
-        this.token = token;
+    public Nodo(Token value){
+        this.value = value;
     }
 
-    public void AddHijo(Nodo n){
+    public void insertarHijo(Nodo n){
         if(hijos == null){
             hijos = new ArrayList<>();
             hijos.add(n);
         }
-        else {
-            hijos.add(0,n);
+        else{
+            hijos.add(0, n);
         }
     }
 
-    public void InsertarSiguienteHijo(Nodo n){
+    public void insertarSiguienteHijo(Nodo n){
         if(hijos == null){
             hijos = new ArrayList<>();
             hijos.add(n);
         }
-        else {
+        else{
             hijos.add(n);
         }
     }
 
-    public void InsertarHijo(Nodo n, int i){
+    public void insertarHijos(List<Nodo> nodosHijos){
         if(hijos == null){
             hijos = new ArrayList<>();
         }
-        else {
+
+        for(Nodo n : nodosHijos){
             hijos.add(n);
         }
     }
 
-    public Token getToken(){
-        return token;
+    public Token getValue(){
+        return value;
     }
 
     public List<Nodo> getHijos(){

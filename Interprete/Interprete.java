@@ -58,16 +58,16 @@ public class Interprete {
         parser.parse();
 
 
-        Postfija gpf = new Postfija(tokens);
-        List<Token> postfija = gpf.Convertir();
+        GeneradorPostfija gpf = new GeneradorPostfija(tokens);
+        List<Token> postfija = gpf.convertir();
 
         for(Token token : postfija){
             System.out.println(token);
         }
 
-        AST gast = new AST(postfija);
+        GeneradorAST gast = new GeneradorAST(postfija);
         Arbol programa = gast.generarAST();
-        //programa.recorrer();
+        programa.recorrer();
     }
 
     /*

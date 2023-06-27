@@ -135,7 +135,7 @@ public class Scanner {
                         NuevoLexema = Palabra.toString();
                         Palabra.setLength(0);
                         //System.out.println(NuevoLexema);
-                        Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
+                        Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,Double.valueOf(NuevoLexema),linea));
                         estado = 9;
                         i=retractar(i);
                     }

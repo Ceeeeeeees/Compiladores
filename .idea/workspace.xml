@@ -33,7 +33,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/cesar/OneDrive/Documentos/GitHub/Compiladores-",
+    "last_opened_file_path": "C:/Users/cesar/Music/interprete_if_var",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -42,10 +42,16 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="mx.ipn.escom.compiladores" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="Compiladores" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="mx.ipn.escom.compiladores.Interprete" />
       <module name="Compiladores-" />
+      <option name="PROGRAM_PARAMETERS" value="prueba.txt" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -70,13 +76,28 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
+        <line-breakpoint type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Scanner.java</url>
           <line>266</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Interprete.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/GeneradorAST.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="15" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="pilaPadres" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Compiladores_$Compiladores.ic" NAME="Compiladores Coverage Results" MODIFIED="1685871612708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

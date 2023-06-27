@@ -1,7 +1,7 @@
 package mx.ipn.escom.compiladores;
 
-import java.util.List;
-import java.util.ArrayList;
+import javax.crypto.spec.OAEPParameterSpec;
+
 public class Arbol {
     private final Nodo raiz;
 
@@ -11,40 +11,39 @@ public class Arbol {
 
     public void recorrer(){
         for(Nodo n : raiz.getHijos()){
-            Token token = n.getToken();
-            switch (token.tipo){
-                //Tipos de Tokens
+            Token t = n.getValue();
+            switch (t.tipo){
+                // Operadores aritméticos
                 case SUMA:
                 case RESTA:
                 case MULTIPLICACION:
                 case DIVICION:
-                    //Operadores Aritmeticos
-                    Aritmetico solver = new Aritmetico(n);
-                    Object resultado = solver.resolver();
-                    System.out.println(resultado);
-                    break;
                 case OPREL:
-                    //Operadores Relacionales
-                    break;
-                case O:
-                case Y:
-                    //Operadores Logicos
-                    break;
+                    Aritmetico solver = new Aritmetico(n);
+                    Object res = solver.resolver();
+                    System.out.println(res);
+                break;
                 case VARIABLE:
-                    //Crear variable
-                    //Usar la tabla de simbolos
-                    break;
-                case IMPRIMIR:
-                    //Imprimir sentencia
-                    //Usar la tabla de simbolos
+                    // Crear una variable. Usar tabla de simbolos
                     break;
                 case SI:
-                case SINO:
-                case MIENTRAS:
-                case POR:
-                    //Estructuras de control
                     break;
+
+                case SINO:
+                    break;
+
+                case IMPRIMIR:
+                    break;
+
+                case POR:
+                    break;
+
+                case MIENTRAS:
+                    break;
+
             }
         }
     }
+
 }
+
