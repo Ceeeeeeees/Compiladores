@@ -2,9 +2,11 @@ package mx.ipn.escom.compiladores;
 
 public class Aritmetico {
     private final Nodo nodo;
+    private final TablaSimbolos tablaSimbolos;
 
-    public Aritmetico(Nodo nodo) {
+    public Aritmetico(Nodo nodo, TablaSimbolos tablaSimbolos) {
         this.nodo = nodo;
+        this.tablaSimbolos = tablaSimbolos;
     }
 
     public Object resolver() {
@@ -18,7 +20,6 @@ public class Aritmetico {
             } else if (n.getValue().tipo == TipoToken.CADENA){
                 return n.getValue().lexema;
             }else if (n.getValue().tipo == TipoToken.IDENTIFICADOR) {
-                TablaSimbolos tablaSimbolos = new TablaSimbolos();
                 return tablaSimbolos.ObtenerValor(n.getValue().lexema);
             }
         }

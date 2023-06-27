@@ -4,9 +4,11 @@ import javax.crypto.spec.OAEPParameterSpec;
 
 public class Arbol {
     private final Nodo raiz;
+    private final TablaSimbolos tablaSimbolos;
 
     public Arbol(Nodo raiz){
         this.raiz = raiz;
+        this.tablaSimbolos = new TablaSimbolos();
     }
 
     public void recorrer(){
@@ -21,7 +23,7 @@ public class Arbol {
                 case OPREL:
                 case Y:
                 case O:
-                    Aritmetico solver = new Aritmetico(n);
+                    Aritmetico solver = new Aritmetico(n,this.tablaSimbolos);
                     Object res = solver.resolver();
                     System.out.println("Resultado de la operacion: "+ res);
                 break;
@@ -29,11 +31,10 @@ public class Arbol {
                     // Crear una variable. Usar tabla de simbolos
                     Nodo identificador = n.getHijos().get(0);
                     Nodo valor = n.getHijos().get(1);
-                    TablaSimbolos tablaSimbolos = new TablaSimbolos();
 
                     if (tablaSimbolos.ExisteIdentificador(identificador.getValue().lexema)){
                         System.out.println("Error: Variable Duplicada.");
-                        throw new RuntimeException("Variable Ya Definida: " + identificador);
+                        throw new RuntimeException("Variable Ya Definida: " + identificador.getValue().lexema);
                     }
 
                     if(valor == null){
