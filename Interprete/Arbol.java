@@ -5,6 +5,7 @@ import javax.crypto.spec.OAEPParameterSpec;
 public class Arbol {
     private final Nodo raiz;
     private final TablaSimbolos tablaSimbolos;
+    private Boolean Condicion;
 
     public Arbol(Nodo raiz){
         this.raiz = raiz;
@@ -60,10 +61,60 @@ public class Arbol {
                     }
                     break;
                 case SI:
+                    Nodo condicion = n.getHijos().get(0);
+                    Aritmetico solverSi = new Aritmetico(condicion, this.tablaSimbolos);
+                    Object resultadoSi = solverSi.resolver();
+
+                    if(!(resultadoSi instanceof Boolean)){
+                        throw new RuntimeException("La condicion no es booleana: " + resultadoSi);
+                    }
+
+                    Condicion = (Boolean) resultadoSi;
+                    if (Condicion){
+                        Nodo bloque = n.getHijos().get(1);
+                            switch (bloque.getValue().tipo){
+                                case IMPRIMIR:
+                                    for (Nodo hijo : bloque.getHijos()){
+                                        Aritmetico solverImprimir = new Aritmetico(hijo, this.tablaSimbolos);
+                                        Object resultado = solverImprimir.resolver();
+                                        System.out.println("Resultado del imprimir: " + resultado);
+                                    }
+                                    break;
+                            }
+                    } else {
+                        Nodo bloque = n.getHijos().get(2);
+                        for (Nodo hijo : bloque.getHijos()){
+                            switch (hijo.getValue().tipo){
+                            case IMPRIMIR:
+                                for (Nodo bijo : bloque.getHijos()){
+                                    Nodo aux = bijo.getHijos().get(0);
+                                    Aritmetico solverImprimir = new Aritmetico(aux, this.tablaSimbolos);
+                                    Object resultado = solverImprimir.resolver();
+                                    System.out.println("Resultado del imprimir: " + resultado);
+                                }
+                                break;
+                            }
+                            break;
+                        }
+
+                    }
                     break;
 
-                case SINO:
-                    break;
+                /*case SINO:
+                    if (Condicion != null && !Condicion){
+                        Nodo bloque = n.getHijos().get(0);
+                        switch (bloque.getValue().tipo){
+                            case IMPRIMIR:
+                                for (Nodo hijo : bloque.getHijos()){
+                                    Aritmetico solverImprimir = new Aritmetico(hijo, this.tablaSimbolos);
+                                    Object resultado = solverImprimir.resolver();
+                                    System.out.println("Resultado del imprimir: " + resultado);
+                                }
+                                break;
+                        }
+                        break;
+                    }
+                    break;*/
 
                 case IMPRIMIR:
                     for (Nodo bijo : n.getHijos()){

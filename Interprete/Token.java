@@ -66,6 +66,10 @@ public class Token {
             case FUNCION:
             case CLASE:
             case ADEMAS:
+            case SI:
+            case SINO:
+            case MIENTRAS:
+            case POR:
                 return true;
             default:
                 return false;

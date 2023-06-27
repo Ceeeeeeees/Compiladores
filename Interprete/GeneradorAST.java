@@ -7,7 +7,6 @@ public class GeneradorAST {
 
     private final List<Token> postfija;
     private final Stack<Nodo> pila;
-    private final Token Igualacion = new Token(TipoToken.OPREL, "==");
 
     public GeneradorAST(List<Token> postfija){
         this.postfija = postfija;

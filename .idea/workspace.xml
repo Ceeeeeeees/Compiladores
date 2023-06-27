@@ -28,20 +28,24 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/cesar/Music/interprete_if_var&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/cesar/Music/interprete_if_var",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.idesettings.quicklists",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="mx.ipn.escom.compiladores" />
@@ -67,7 +71,7 @@
       <updated>1680127442224</updated>
       <workItem from="1687636795325" duration="5679000" />
       <workItem from="1687722988903" duration="4667000" />
-      <workItem from="1687881421694" duration="13017000" />
+      <workItem from="1687881421694" duration="19995000" />
     </task>
     <servers />
   </component>
@@ -77,35 +81,34 @@
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint type="java-line">
-          <url>file://$PROJECT_DIR$/Interprete/Scanner.java</url>
-          <line>266</line>
-          <option name="timeStamp" value="3" />
-        </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Interprete/Aritmetico.java</url>
-          <line>16</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>73</line>
+          <option name="timeStamp" value="27" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>31</line>
-          <option name="timeStamp" value="19" />
+          <line>103</line>
+          <option name="timeStamp" value="28" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>84</line>
+          <option name="timeStamp" value="31" />
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="21" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Nodo" memberName="hijos" />
         <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Token" memberName="linea" />
+        <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Nodo" memberName="value" />
       </pinned-members>
     </pin-to-top-manager>
-    <watches-manager>
-      <configuration name="Application">
-        <watch expression="pilaPadres" />
-        <watch expression="((java.util.ArrayList)((Nodo)((ArrayList)((Nodo)((ArrayList)((Nodo)((Arbol)this).raiz).hijos).get(1)).hijos).get(1)).hijos).get(1)" language="JAVA" custom="mx.ipn.escom.compiladores.Nodo,mx.ipn.escom.compiladores.Arbol,java.util.ArrayList" />
-        <watch expression="((java.util.ArrayList)((Nodo)((ArrayList)((Nodo)((ArrayList)((Nodo)((Arbol)this).raiz).hijos).get(1)).hijos).get(1)).hijos).get(1)" custom="mx.ipn.escom.compiladores.Nodo,mx.ipn.escom.compiladores.Arbol,java.util.ArrayList" />
-      </configuration>
-    </watches-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Compiladores_$Compiladores.ic" NAME="Compiladores Coverage Results" MODIFIED="1685871612708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
