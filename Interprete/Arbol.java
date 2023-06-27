@@ -27,18 +27,19 @@ public class Arbol {
                     // Crear una variable. Usar tabla de simbolos
                     break;
                 case SI:
-                    break;
 
                 case SINO:
-                    break;
-
-                case IMPRIMIR:
-                    break;
-
-                case POR:
-                    break;
 
                 case MIENTRAS:
+
+                case POR:
+                    EstructurasControl solve = new EstructurasControl(n);
+                    Object reso = solve.resolver();
+                    System.out.println(reso);
+                    break;
+
+
+                case IMPRIMIR:
                     break;
 
             }

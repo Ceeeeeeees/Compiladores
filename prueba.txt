@@ -1,1 +1,4 @@
-var1 + 5 <= edad - 18;
+var nombre = "Gabriel";
+var apellido = "Rodriguez";
+
+print nombre + " " + apellido;

@@ -51,18 +51,18 @@ public class Aritmetico {
 
                 case O:
                     if (valorIzquierda != 0 || valorDerecha != 0) {
-                        return true;
+                        return (Boolean) true;
                     } else {
-                        return false;
+                        return (Boolean) false;
                     }
 
                 case Y:
-
-                    if (valorIzquierda == 1 && valorDerecha == 1) {
-                        return true;
+                    if (valorIzquierda != 0 && valorDerecha != 0) {
+                        return (Boolean) true;
                     } else {
-                        return false;
+                        return (Boolean) false;
                     }
+
             }
 
 
