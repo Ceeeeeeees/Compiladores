@@ -49,6 +49,8 @@
   </component>
   <component name="RunManager">
     <configuration name="Compiladores" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="$PROJECT_DIR$/../../../../../../Program Files/Java/jdk-20" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="mx.ipn.escom.compiladores.Interprete" />
       <module name="Compiladores-" />
       <option name="PROGRAM_PARAMETERS" value="prueba.txt" />
@@ -81,6 +83,7 @@
           <line>266</line>
           <option name="timeStamp" value="3" />
         </line-breakpoint>
+<<<<<<< Updated upstream
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Interprete.java</url>
           <line>69</line>
@@ -90,7 +93,22 @@
           <url>file://$PROJECT_DIR$/Interprete/GeneradorAST.java</url>
           <line>84</line>
           <option name="timeStamp" value="15" />
+=======
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Aritmetico.java</url>
+          <line>16</line>
+          <option name="timeStamp" value="16" />
         </line-breakpoint>
+        <line-breakpoint type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="19" />
+>>>>>>> Stashed changes
+        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.UnsupportedClassVersionError" package="java.lang" />
+          <option name="timeStamp" value="20" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>

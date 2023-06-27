@@ -29,6 +29,7 @@ public class Arbol {
                 case SI:
 
                 case SINO:
+<<<<<<< Updated upstream
 
                 case MIENTRAS:
 
@@ -41,6 +42,29 @@ public class Arbol {
 
                 case IMPRIMIR:
                     break;
+=======
+
+                case POR:
+
+
+                case MIENTRAS:
+
+                    EstructurasControl solver_EC = new EstructurasControl(n);
+                    Object resol = solver_EC.resolver();
+                    System.out.println("Resultado de la operacion: "+ resol);
+
+                    break;
+
+                case IMPRIMIR:
+                    for (Nodo bijo : n.getHijos()){
+                        Aritmetico solverImprimir = new Aritmetico(bijo, this.tablaSimbolos);
+                        Object resultado = solverImprimir.resolver();
+                        System.out.println("Resultado del imprimir: " + resultado);
+                    }
+                    break;
+
+
+>>>>>>> Stashed changes
 
             }
         }

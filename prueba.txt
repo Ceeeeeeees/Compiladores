@@ -1,4 +1,123 @@
+<<<<<<< Updated upstream
 var nombre = "Gabriel";
 var apellido = "Rodriguez";
 
 print nombre + " " + apellido;
+=======
+/*imprimir "Prueba 1";
+
+var nombre = "Juan";
+var apellido = "Perez";
+imprimir nombre + " " + apellido;
+
+imprimir "Prueba 2";
+
+var nombre2 = "Maria";
+var apellido2 = "Gomez";
+imprimir nombre2 + " " + apellido2 + edad;
+
+imprimir "Prueba 3";
+
+var radio = 5;
+var area = pi * radio * radio;
+imprimir "El area es: ";
+imprimir area;
+
+imprimir "Prueba 4";
+
+var radio2 = 10;
+var pi = 3.1416;
+var area2 = pi * radio2 * radio2;
+imprimir "El area es: ";
+imprimir area2;
+
+imprimir "Prueba 5";
+
+var radio3 = 10;
+var pi2 = 3.1416;
+var area3 = pi2 * radio3 * radio3;
+imprimir "El area es: ";
+imprimir area3;*/
+
+imprimir "Prueba 6";
+
+var radio4 = 5;
+var pi3 = 3.1416;
+var area4 = pi3 * radio4 * radio4;
+
+si (area4>100 y radio4<10) {
+    imprimir "Condicion Valida";
+}
+
+imprimir "Prueba 7";
+
+var radio4 = 5;
+var pi3 = 3.1416;
+var area4 = pi3 * radio4 * radio4;
+
+si (area4>100 y radio4<10) {
+    imprimir "Condicion Valida";
+}
+sino {
+    imprimir "Condicion Invalida";
+}
+
+/*
+
+        Prueba 8:
+
+*/
+/*
+Código para calcula la serie de Fibonacci
+*/
+var fib = 0;
+var lim = 10;
+var aux = 1;
+var init = 1;
+
+mientras(init <= lim){
+    imprimir fib;
+    aux = aux + fib;
+    fib = aux - fib;
+    init = init + 1;
+}
+
+/*
+
+                 Prueba 9:
+
+*/
+/*
+Código para calcula la serie de Fibonacci
+*/
+var fib = 0;
+var lim = 10;
+var aux = 1;
+
+por(var init = 1; init <= lim; init = init + 1){
+    imprimir fib;
+    aux = aux + fib;
+    fib = aux - fib;
+}
+
+imprimir "Fin";
+
+
+/*
+
+                        Prueba 10
+
+*/
+var max=10;
+
+por(var i=0; i<10; i=i+1){
+    si(i<5){
+        imprimir "menor a 5";
+    }
+    sino{
+        imprimir "mayor o igual a 5";
+    }
+}
+
+imprimir "Fin";
+>>>>>>> Stashed changes

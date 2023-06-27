@@ -100,4 +100,8 @@ public class EstructurasControl {
 
         return null;
     }
+<<<<<<< Updated upstream
 }
+=======
+}
+>>>>>>> Stashed changes
