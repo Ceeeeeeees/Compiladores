@@ -67,7 +67,7 @@ public class GeneradorAST {
                         En el caso del VAR, es necesario eliminar el igual que
                         pudiera aparecer en la raíz del nodo n.
                          */
-                        if(n.getValue().tipo.equals(Igualacion)){
+                        if(n.getValue().lexema == "="){
                             padre.insertarHijos(n.getHijos());
                         }
                         else{

@@ -1,1 +1,10 @@
+var var1 = 5;
+var edad = 3;
 var1 + 5 <= edad - 18;
+
+5 + 5 <= 3 - 18;
+
+var var1 = verdadero;
+var var2 = falso;
+var var3 = "Hola";
+var var4 = "Mundo";

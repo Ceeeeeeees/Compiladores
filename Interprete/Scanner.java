@@ -150,7 +150,7 @@ public class Scanner {
                         NuevoLexema = Palabra.toString();
                         Palabra.setLength(0);
                         //System.out.println(NuevoLexema);
-                        Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
+                        Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,Double.valueOf(NuevoLexema),linea));
                         estado = 9;
                         i=retractar(i);
                     }
@@ -169,7 +169,7 @@ public class Scanner {
                     NuevoLexema = Palabra.toString();
                     Palabra.setLength(0);
                     //System.out.println(NuevoLexema);
-                    Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,null,linea));
+                    Tokens.add(new Token(TipoToken.NUMERO,NuevoLexema,Double.valueOf(NuevoLexema),linea));
                     estado = 9;
                     i=retractar(i);
                     }
@@ -179,7 +179,7 @@ public class Scanner {
                         NuevoLexema = Palabra.toString();
                         Palabra.setLength(0);
                         //System.out.println(NuevoLexema);
-                        Tokens.add(new Token(TipoToken.CADENA,NuevoLexema,null,linea));
+                        Tokens.add(new Token(TipoToken.CADENA,NuevoLexema,NuevoLexema,linea));
                         estado = 9;
                     }else Palabra.append(Caracter);
                     break;

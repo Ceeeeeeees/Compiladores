@@ -66,6 +66,7 @@ public class Parser {
             System.out.println("Error: en la posicion " + tokenActual.linea + ". No se esperaba el token " + tokenActual.tipo);
         } else if (!error && tokenActual.equals(FinCadena)){
             System.out.println("Analisis sintactico exitoso");
+            System.out.println(" ");
         }
     }
     void Declaration(){

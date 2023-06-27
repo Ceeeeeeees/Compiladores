@@ -10,8 +10,14 @@ public class Token {
     public Token(TipoToken tipo, String lexema, Object literal, int linea) {
         this.tipo = tipo;
         this.lexema = lexema;
-        this.literal = literal;
         this.linea = linea;
+        if (tipo == TipoToken.VERDADERO){
+            this.literal = true;
+        } else if (tipo == TipoToken.FALSO){
+            this.literal = false;
+        } else {
+            this.literal = literal;
+        }
     }
     public Token (TipoToken tipo, String lexema){
         this.tipo = tipo;
@@ -25,7 +31,9 @@ public class Token {
         switch (this.tipo){
             case IDENTIFICADOR:
             case NUMERO:
-            case CADENA: //Tengo mis dudas
+            case CADENA:
+            case VERDADERO:
+            case FALSO:
                 return true;
             default:
                 return false;
@@ -49,10 +57,6 @@ public class Token {
 
     public boolean esPalabraReservada(){
         switch (this.tipo){
-            case SI:
-            case SINO:
-            case MIENTRAS:
-            case POR:
             case IMPRIMIR:
             case RETORNAR:
             case VARIABLE:
@@ -62,10 +66,6 @@ public class Token {
             case FUNCION:
             case CLASE:
             case ADEMAS:
-            case Y:
-            case O:
-            case FALSO:
-            case VERDADERO:
                 return true;
             default:
                 return false;
