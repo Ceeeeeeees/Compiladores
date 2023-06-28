@@ -82,24 +82,24 @@ public class Arbol {
                                     break;
                             }
                     } else {
-                        Nodo bloque = n.getHijos().get(2);
-                        for (Nodo hijo : bloque.getHijos()){
-                            switch (hijo.getValue().tipo){
-                            case IMPRIMIR:
-                                for (Nodo bijo : bloque.getHijos()){
-                                    Nodo aux = bijo.getHijos().get(0);
-                                    Aritmetico solverImprimir = new Aritmetico(aux, this.tablaSimbolos);
-                                    Object resultado = solverImprimir.resolver();
-                                    System.out.println("Resultado del imprimir: " + resultado);
+                        if (n.getHijos().size() == 3){
+                            Nodo bloque = n.getHijos().get(2);
+                            for (Nodo hijo : bloque.getHijos()){
+                                switch (hijo.getValue().tipo){
+                                    case IMPRIMIR:
+                                        for (Nodo bijo : bloque.getHijos()){
+                                            Nodo aux = bijo.getHijos().get(0);
+                                            Aritmetico solverImprimir = new Aritmetico(aux, this.tablaSimbolos);
+                                            Object resultado = solverImprimir.resolver();
+                                            System.out.println("Resultado del imprimir: " + resultado);
+                                        }
+                                        break;
                                 }
                                 break;
                             }
-                            break;
                         }
-
                     }
                     break;
-
 
                 case IMPRIMIR:
                     for (Nodo bijo : n.getHijos()){
@@ -112,8 +112,8 @@ public class Arbol {
                 case POR:
                     // Inicialización
                     Nodo inicializacion = n.getHijos().get(0);
-                    Aritmetico solverInicializacion = new Aritmetico(inicializacion, this.tablaSimbolos);
-                    solverInicializacion.resolver();
+                    Nodo valorInicializacion = inicializacion.getHijos().get(0);
+                    tablaSimbolos.Asignar(inicializacion.getValue().lexema, valorInicializacion.getValue().literal);
 
                     // Condición
                     Nodo condicionPor = n.getHijos().get(1);
@@ -189,7 +189,6 @@ public class Arbol {
                         }
                     } while ((Boolean) resultadoMientras);
                     break;
-
                 }
             }
         }

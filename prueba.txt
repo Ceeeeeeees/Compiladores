@@ -13,4 +13,3 @@ mientras(init <= lim){
 }
 
 imprimir "Fin";
-
