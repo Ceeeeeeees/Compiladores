@@ -132,7 +132,6 @@ public class Arbol {
                     Nodo bloquePor = n.getHijos().get(3);
 
                     while ((Boolean) resultadoCondicionPor){
-                        // Ejecutar el bloque de código
                         for (Nodo hijo : bloquePor.getHijos()){
                             switch (hijo.getValue().tipo){
                                 case IMPRIMIR:
@@ -142,12 +141,58 @@ public class Arbol {
                                         System.out.println("Resultado del imprimir: " + resultado);
                                     }
                                     break;
-                                // Aquí puedes agregar más casos para otros tipos de instrucciones
+                                case OPREL:
+                                    Aritmetico solverOperacion = new Aritmetico(hijo, this.tablaSimbolos);
+                                    Object resultado = solverOperacion.resolver();
+                                    tablaSimbolos.Asignar(hijo.getHijos().get(0).getValue().lexema, resultado);
+                                    System.out.println("Resultado: " + resultado);
+                                    break;
+                                case SI:
+                                    Nodo condicionSIPOR = n.getHijos().get(0);
+                                    Aritmetico solverSiPOR = new Aritmetico(condicionSIPOR, this.tablaSimbolos);
+                                    Object resultadoSiPOR = solverSiPOR.resolver();
+
+                                    if(!(resultadoSiPOR instanceof Boolean)){
+                                        throw new RuntimeException("La condicion no es booleana: " + resultadoSiPOR);
+                                    }
+
+                                    Condicion = (Boolean) resultadoSiPOR;
+                                    if (Condicion){
+                                        Nodo bloque = n.getHijos().get(1);
+                                        switch (bloque.getValue().tipo){
+                                            case IMPRIMIR:
+                                                for (Nodo mijo : bloque.getHijos()){
+                                                    Aritmetico solverImprimir = new Aritmetico(mijo, this.tablaSimbolos);
+                                                    Object resultado1 = solverImprimir.resolver();
+                                                    System.out.println("Resultado del imprimir: " + resultado1);
+                                                }
+                                                break;
+                                        }
+                                    } else {
+                                        if (n.getHijos().size() == 3){
+                                            Nodo bloque = n.getHijos().get(2);
+                                            for (Nodo mijo : bloque.getHijos()){
+                                                switch (mijo.getValue().tipo){
+                                                    case IMPRIMIR:
+                                                        for (Nodo bijo : bloque.getHijos()){
+                                                            Nodo aux = bijo.getHijos().get(0);
+                                                            Aritmetico solverImprimir = new Aritmetico(aux, this.tablaSimbolos);
+                                                            Object resultado2 = solverImprimir.resolver();
+                                                            System.out.println("Resultado del imprimir: " + resultado2);
+                                                        }
+                                                        break;
+                                                }
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    break;
                             }
                         }
 
                         // Incrementar o decrementar la variable
                         solverIncremento.resolver();
+                        tablaSimbolos.Asignar(inicializacion.getValue().lexema, incremento.getValue().literal);
 
                         // Evaluar de nuevo la condición
                         resultadoCondicionPor = solverCondicionPor.resolver();

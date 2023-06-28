@@ -1,15 +1,13 @@
-imprimir "prueba 8";
+imprimir "Prueba 9";
 
 var fib = 0;
 var lim = 10;
 var aux = 1;
-var init = 1;
 
-mientras(init <= lim){
+por (var init = 1; init <= lim; init = init + 1){
     imprimir fib;
     aux = aux + fib;
     fib = aux - fib;
-    init = init + 1;
 }
 
 imprimir "Fin";
