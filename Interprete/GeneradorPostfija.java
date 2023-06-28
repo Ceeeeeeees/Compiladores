@@ -49,12 +49,14 @@ public class GeneradorPostfija {
                     Token temp = pila.pop();
                     postfija.add(temp);
                 }
-                if(pila.peek().tipo == TipoToken.INPARENT){
-                    pila.pop();
-                }
                 if(estructuraDeControl){
                     postfija.add(new Token(TipoToken.PUNTOCOMA, ";"));
                 }
+                if(!pila.isEmpty() && pila.peek().tipo == TipoToken.INPARENT){
+
+                    pila.pop();
+                }
+
             }
             else if(t.esOperador()){
                 while(!pila.isEmpty() && pila.peek().PrecedenciaMayorIgual(t)){

@@ -89,18 +89,13 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>194</line>
+          <line>191</line>
           <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>186</line>
+          <line>183</line>
           <option name="timeStamp" value="50" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>113</line>
-          <option name="timeStamp" value="51" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
@@ -114,18 +109,14 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>133</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>157</line>
-          <option name="timeStamp" value="55" />
+          <line>113</line>
+          <option name="timeStamp" value="59" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Nodo" memberName="hijos" />
         <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Token" memberName="linea" />
         <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Nodo" memberName="value" />
       </pinned-members>

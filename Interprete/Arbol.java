@@ -112,93 +112,50 @@ public class Arbol {
                 case POR:
                     // Inicialización
                     Nodo inicializacion = n.getHijos().get(0);
-                    Nodo valorInicializacion = inicializacion.getHijos().get(0);
-                    tablaSimbolos.Asignar(inicializacion.getValue().lexema, valorInicializacion.getValue().literal);
+                    Nodo nombreInicializacion = inicializacion.getHijos().get(0);
+                    Nodo valorInicializacion = inicializacion.getHijos().get(1);
+                    tablaSimbolos.Asignar(nombreInicializacion.getValue().lexema, valorInicializacion.getValue().literal);
 
                     // Condición
                     Nodo condicionPor = n.getHijos().get(1);
                     Aritmetico solverCondicionPor = new Aritmetico(condicionPor, this.tablaSimbolos);
-                    Object resultadoCondicionPor = solverCondicionPor.resolver();
-
-                    if(!(resultadoCondicionPor instanceof Boolean)){
-                        throw new RuntimeException("La condicion no es booleana: " + resultadoCondicionPor);
-                    }
 
                     // Incremento o decremento
                     Nodo incremento = n.getHijos().get(2);
                     Aritmetico solverIncremento = new Aritmetico(incremento, this.tablaSimbolos);
+                    Object resultadoCondicionPor = solverCondicionPor.resolver();
 
-                    // Bloque de código
-                    Nodo bloquePor = n.getHijos().get(3);
-
-                    while ((Boolean) resultadoCondicionPor){
-                        for (Nodo hijo : bloquePor.getHijos()){
-                            switch (hijo.getValue().tipo){
-                                case IMPRIMIR:
-                                    for (Nodo bijo : hijo.getHijos()){
-                                        Aritmetico solverImprimir = new Aritmetico(bijo, this.tablaSimbolos);
-                                        Object resultado = solverImprimir.resolver();
-                                        System.out.println("Resultado del imprimir: " + resultado);
-                                    }
-                                    break;
-                                case OPREL:
-                                    Aritmetico solverOperacion = new Aritmetico(hijo, this.tablaSimbolos);
-                                    Object resultado = solverOperacion.resolver();
-                                    tablaSimbolos.Asignar(hijo.getHijos().get(0).getValue().lexema, resultado);
-                                    System.out.println("Resultado: " + resultado);
-                                    break;
-                                case SI:
-                                    Nodo condicionSIPOR = n.getHijos().get(0);
-                                    Aritmetico solverSiPOR = new Aritmetico(condicionSIPOR, this.tablaSimbolos);
-                                    Object resultadoSiPOR = solverSiPOR.resolver();
-
-                                    if(!(resultadoSiPOR instanceof Boolean)){
-                                        throw new RuntimeException("La condicion no es booleana: " + resultadoSiPOR);
-                                    }
-
-                                    Condicion = (Boolean) resultadoSiPOR;
-                                    if (Condicion){
-                                        Nodo bloque = n.getHijos().get(1);
-                                        switch (bloque.getValue().tipo){
-                                            case IMPRIMIR:
-                                                for (Nodo mijo : bloque.getHijos()){
-                                                    Aritmetico solverImprimir = new Aritmetico(mijo, this.tablaSimbolos);
-                                                    Object resultado1 = solverImprimir.resolver();
-                                                    System.out.println("Resultado del imprimir: " + resultado1);
-                                                }
-                                                break;
-                                        }
-                                    } else {
-                                        if (n.getHijos().size() == 3){
-                                            Nodo bloque = n.getHijos().get(2);
-                                            for (Nodo mijo : bloque.getHijos()){
-                                                switch (mijo.getValue().tipo){
-                                                    case IMPRIMIR:
-                                                        for (Nodo bijo : bloque.getHijos()){
-                                                            Nodo aux = bijo.getHijos().get(0);
-                                                            Aritmetico solverImprimir = new Aritmetico(aux, this.tablaSimbolos);
-                                                            Object resultado2 = solverImprimir.resolver();
-                                                            System.out.println("Resultado del imprimir: " + resultado2);
-                                                        }
-                                                        break;
-                                                }
-                                                break;
-                                            }
-                                        }
-                                    }
-                                    break;
-                            }
+                    do {
+                        if(!(resultadoCondicionPor instanceof Boolean)){
+                            throw new RuntimeException("La condicion no es booleana: " + resultadoCondicionPor);
                         }
 
-                        // Incrementar o decrementar la variable
+                        if ((Boolean) resultadoCondicionPor){
+
+                            for (int i = 3; i < n.getHijos().size(); i++){
+                                Nodo bloque = n.getHijos().get(i);
+                                switch (bloque.getValue().tipo){
+                                    case IMPRIMIR:
+                                        for (Nodo mijo : bloque.getHijos()){
+                                            Aritmetico solverImprimir = new Aritmetico(mijo, this.tablaSimbolos);
+                                            Object resultado = solverImprimir.resolver();
+                                            System.out.println("Resultado del Imprimir: " + resultado);
+                                        }
+                                        break;
+                                    case OPREL:
+                                        Aritmetico solverOperacion = new Aritmetico(bloque, this.tablaSimbolos);
+                                        Object resultado = solverOperacion.resolver();
+                                        tablaSimbolos.Asignar(bloque.getHijos().get(0).getValue().lexema, resultado);
+                                        System.out.println("Resultado: " + resultado);
+                                        break;
+                                }
+                            }
+                        }
                         solverIncremento.resolver();
-                        tablaSimbolos.Asignar(inicializacion.getValue().lexema, incremento.getValue().literal);
-
-                        // Evaluar de nuevo la condición
                         resultadoCondicionPor = solverCondicionPor.resolver();
-                    }
-                    break;
+                    } while ((Boolean) resultadoCondicionPor);
 
+                    break;
                 case MIENTRAS:
                     Nodo condicionMientras = n.getHijos().get(0);
                     Object resultadoMientras;
