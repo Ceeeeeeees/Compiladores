@@ -2,6 +2,7 @@
 var nombre = "Gabriel";
 var apellido = "Rodriguez";
 
+<<<<<<< Updated upstream
 print nombre + " " + apellido;
 =======
 /*imprimir "Prueba 1";
@@ -73,16 +74,19 @@ Código para calcula la serie de Fibonacci
 var fib = 0;
 var lim = 10;
 var aux = 1;
+=======
+
+>>>>>>> Stashed changes
 var init = 1;
 
-mientras(init <= lim){
-    imprimir fib;
-    aux = aux + fib;
-    fib = aux - fib;
-    init = init + 1;
-}
+init = init+1;
 
+<<<<<<< Updated upstream
 /*
+=======
+
+imprimir "Fin";
+>>>>>>> Stashed changes
 
                  Prueba 9:
 

@@ -19,7 +19,14 @@ public class Arbol {
                 case MULTIPLICACION:
                 case DIVICION:
                 case OPREL:
+<<<<<<< Updated upstream
                     Aritmetico solver = new Aritmetico(n);
+=======
+                case Y:
+                case IDENTIFICADOR:
+                case O:
+                    Aritmetico solver = new Aritmetico(n,this.tablaSimbolos);
+>>>>>>> Stashed changes
                     Object res = solver.resolver();
                     System.out.println(res);
                 break;

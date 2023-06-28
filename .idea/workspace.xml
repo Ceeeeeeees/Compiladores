@@ -85,6 +85,7 @@
         </line-breakpoint>
 <<<<<<< Updated upstream
         <line-breakpoint enabled="true" type="java-line">
+<<<<<<< Updated upstream
           <url>file://$PROJECT_DIR$/Interprete/Interprete.java</url>
           <line>69</line>
           <option name="timeStamp" value="11" />
@@ -103,6 +104,16 @@
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
           <line>31</line>
           <option name="timeStamp" value="19" />
+>>>>>>> Stashed changes
+=======
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="27" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>85</line>
+          <option name="timeStamp" value="31" />
 >>>>>>> Stashed changes
         </line-breakpoint>
         <breakpoint enabled="true" type="java-exception">
