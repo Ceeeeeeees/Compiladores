@@ -100,21 +100,6 @@ public class Arbol {
                     }
                     break;
 
-                /*case SINO:
-                    if (Condicion != null && !Condicion){
-                        Nodo bloque = n.getHijos().get(0);
-                        switch (bloque.getValue().tipo){
-                            case IMPRIMIR:
-                                for (Nodo hijo : bloque.getHijos()){
-                                    Aritmetico solverImprimir = new Aritmetico(hijo, this.tablaSimbolos);
-                                    Object resultado = solverImprimir.resolver();
-                                    System.out.println("Resultado del imprimir: " + resultado);
-                                }
-                                break;
-                        }
-                        break;
-                    }
-                    break;*/
 
                 case IMPRIMIR:
                     for (Nodo bijo : n.getHijos()){
@@ -125,14 +110,90 @@ public class Arbol {
                     break;
 
                 case POR:
+                    // Inicialización
+                    Nodo inicializacion = n.getHijos().get(0);
+                    Aritmetico solverInicializacion = new Aritmetico(inicializacion, this.tablaSimbolos);
+                    solverInicializacion.resolver();
+
+                    // Condición
+                    Nodo condicionPor = n.getHijos().get(1);
+                    Aritmetico solverCondicionPor = new Aritmetico(condicionPor, this.tablaSimbolos);
+                    Object resultadoCondicionPor = solverCondicionPor.resolver();
+
+                    if(!(resultadoCondicionPor instanceof Boolean)){
+                        throw new RuntimeException("La condicion no es booleana: " + resultadoCondicionPor);
+                    }
+
+                    // Incremento o decremento
+                    Nodo incremento = n.getHijos().get(2);
+                    Aritmetico solverIncremento = new Aritmetico(incremento, this.tablaSimbolos);
+
+                    // Bloque de código
+                    Nodo bloquePor = n.getHijos().get(3);
+
+                    while ((Boolean) resultadoCondicionPor){
+                        // Ejecutar el bloque de código
+                        for (Nodo hijo : bloquePor.getHijos()){
+                            switch (hijo.getValue().tipo){
+                                case IMPRIMIR:
+                                    for (Nodo bijo : hijo.getHijos()){
+                                        Aritmetico solverImprimir = new Aritmetico(bijo, this.tablaSimbolos);
+                                        Object resultado = solverImprimir.resolver();
+                                        System.out.println("Resultado del imprimir: " + resultado);
+                                    }
+                                    break;
+                                // Aquí puedes agregar más casos para otros tipos de instrucciones
+                            }
+                        }
+
+                        // Incrementar o decrementar la variable
+                        solverIncremento.resolver();
+
+                        // Evaluar de nuevo la condición
+                        resultadoCondicionPor = solverCondicionPor.resolver();
+                    }
                     break;
 
                 case MIENTRAS:
+                    Nodo condicionMientras = n.getHijos().get(0);
+                    Object resultadoMientras;
+
+                    do {
+                        Aritmetico solverMientras = new Aritmetico(condicionMientras, this.tablaSimbolos);
+                        resultadoMientras = solverMientras.resolver();
+
+                        if(!(resultadoMientras instanceof Boolean)){
+                            throw new RuntimeException("La condicion no es booleana: " + resultadoMientras);
+                        }
+
+                        if((Boolean) resultadoMientras){
+                            Nodo bloque = n.getHijos().get(1);
+                            for (Nodo hijo : bloque.getHijos()){
+                                switch (hijo.getValue().tipo){
+                                    case IMPRIMIR:
+                                        for (Nodo mijo : hijo.getHijos()){
+                                            Aritmetico solverImprimir = new Aritmetico(mijo, this.tablaSimbolos);
+                                            Object resultado = solverImprimir.resolver();
+                                            System.out.println("Resultado: " + resultado);
+                                        }
+                                        break;
+                                    // Aquí puedes agregar más casos para otros tipos de instrucciones
+                                }
+                            }
+                        }
+                    } while((Boolean) resultadoMientras);
                     break;
+
+
+
+            }
+
+
+
 
             }
         }
     }
 
-}
+
 

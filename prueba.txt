@@ -1,12 +1,16 @@
-imprimir "Prueba 7";
+imprimir "prueba 8";
 
-var radio4 = 5;
-var pi3 = 3.1416;
-var area4 = pi3 * radio4 * radio4;
+var fib = 0;
+var lim = 10;
+var aux = 1;
+var init = 1;
 
-si (area4>100 y radio4<10) {
-    imprimir "Condicion Valida";
+mientras(init <= lim){
+    imprimir fib;
+    aux = aux + fib;
+    fib = aux - fib;
+    init = init + 1;
 }
-sino {
-    imprimir "Condicion Invalida";
-}
+
+primir "Fin";
+
