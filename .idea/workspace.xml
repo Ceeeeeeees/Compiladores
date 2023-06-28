@@ -120,6 +120,7 @@
           <properties class="java.lang.UnsupportedClassVersionError" package="java.lang" />
           <option name="timeStamp" value="20" />
         </breakpoint>
+<<<<<<< Updated upstream
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
@@ -127,6 +128,41 @@
         <watch expression="pilaPadres" />
       </configuration>
     </watches-manager>
+=======
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.util.EmptyStackException" package="java.util" />
+          <option name="timeStamp" value="37" />
+        </breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>156</line>
+          <option name="timeStamp" value="32" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="35" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>170</line>
+          <option name="timeStamp" value="36" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/GeneradorPostfija.java</url>
+          <line>46</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+    <pin-to-top-manager>
+      <pinned-members>
+        <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Nodo" memberName="hijos" />
+        <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Token" memberName="linea" />
+        <PinnedItemInfo parentTag="mx.ipn.escom.compiladores.Nodo" memberName="value" />
+      </pinned-members>
+    </pin-to-top-manager>
+>>>>>>> Stashed changes
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Compiladores_$Compiladores.ic" NAME="Compiladores Coverage Results" MODIFIED="1685871612708" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />

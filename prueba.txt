@@ -1,6 +1,10 @@
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 var nombre = "Gabriel";
 var apellido = "Rodriguez";
+=======
+imprimir "Prueba 9";
+>>>>>>> Stashed changes
 
 <<<<<<< Updated upstream
 print nombre + " " + apellido;
@@ -79,6 +83,7 @@ var aux = 1;
 >>>>>>> Stashed changes
 var init = 1;
 
+<<<<<<< Updated upstream
 init = init+1;
 
 <<<<<<< Updated upstream
@@ -99,6 +104,9 @@ var lim = 10;
 var aux = 1;
 
 por(var init = 1; init <= lim; init = init + 1){
+=======
+por(init = 0 ; init<=lim ; init = i +1){
+>>>>>>> Stashed changes
     imprimir fib;
     aux = aux + fib;
     fib = aux - fib;
