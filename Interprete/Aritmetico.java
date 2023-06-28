@@ -63,6 +63,8 @@ public class Aritmetico {
                             return (Boolean) (valorIzquierda == valorDerecha);
                         case "<>":
                             return (Boolean) (valorIzquierda != valorDerecha);
+                        case "=":
+                            return (Double) (valorIzquierda + valorDerecha);
                     }
                     //return evaluarOpeRel(n.getValue().lexema, valorIzquierda, valorDerecha);
             }

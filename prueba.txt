@@ -12,5 +12,5 @@ mientras(init <= lim){
     init = init + 1;
 }
 
-primir "Fin";
+imprimir "Fin";
 
