@@ -89,13 +89,13 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>157</line>
-          <option name="timeStamp" value="32" />
+          <line>189</line>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
-          <line>26</line>
-          <option name="timeStamp" value="35" />
+          <line>181</line>
+          <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

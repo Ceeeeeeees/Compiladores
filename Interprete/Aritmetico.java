@@ -64,9 +64,8 @@ public class Aritmetico {
                         case "<>":
                             return (Boolean) (valorIzquierda != valorDerecha);
                         case "=":
-                            return (Double) (valorIzquierda + valorDerecha);
+                            return (Double) (valorDerecha);
                     }
-                    //return evaluarOpeRel(n.getValue().lexema, valorIzquierda, valorDerecha);
             }
         } else if (ResultadoIzquierda instanceof String && ResultadoDerecha instanceof String) {
             String valorIzquierda = (String) ResultadoIzquierda;

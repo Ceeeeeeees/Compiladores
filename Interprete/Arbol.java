@@ -38,7 +38,7 @@ public class Arbol {
                     }
 
                     if(n.getHijos().size() == 1){
-                        tablaSimbolos.Asignar(identificador.getValue().lexema, null);
+                        tablaSimbolos.Asignar(identificador.getValue().lexema, 0);
                     }else{
                         for (int i = 1; i < n.getHijos().size(); i++){
                             Nodo valor = n.getHijos().get(i);
@@ -157,9 +157,10 @@ public class Arbol {
                 case MIENTRAS:
                     Nodo condicionMientras = n.getHijos().get(0);
                     Object resultadoMientras;
+                    Aritmetico solverMientras;
 
                     do {
-                        Aritmetico solverMientras = new Aritmetico(condicionMientras, this.tablaSimbolos);
+                        solverMientras = new Aritmetico(condicionMientras, this.tablaSimbolos);
                         resultadoMientras = solverMientras.resolver();
 
                         if(!(resultadoMientras instanceof Boolean)){
@@ -167,30 +168,29 @@ public class Arbol {
                         }
 
                         if((Boolean) resultadoMientras){
-                            Nodo bloque = n.getHijos().get(1);
-                            for (Nodo hijo : bloque.getHijos()){
-                                switch (hijo.getValue().tipo){
+                            for (int i = 1; i < n.getHijos().size(); i++){
+                                Nodo bloque = n.getHijos().get(i);
+                                switch (bloque.getValue().tipo){
                                     case IMPRIMIR:
-                                        for (Nodo mijo : hijo.getHijos()){
+                                        for (Nodo mijo : bloque.getHijos()){
                                             Aritmetico solverImprimir = new Aritmetico(mijo, this.tablaSimbolos);
                                             Object resultado = solverImprimir.resolver();
-                                            System.out.println("Resultado: " + resultado);
+                                            System.out.println("Resultado del Imprimir: " + resultado);
                                         }
                                         break;
-                                    // Aquí puedes agregar más casos para otros tipos de instrucciones
+                                    case OPREL:
+                                        Aritmetico solverOperacion = new Aritmetico(bloque, this.tablaSimbolos);
+                                        Object resultado = solverOperacion.resolver();
+                                        tablaSimbolos.Asignar(bloque.getHijos().get(0).getValue().lexema, resultado);
+                                        System.out.println("Resultado: " + resultado);
+                                        break;
                                 }
                             }
                         }
-                    } while((Boolean) resultadoMientras);
+                    } while ((Boolean) resultadoMientras);
                     break;
 
-
-
-            }
-
-
-
-
+                }
             }
         }
     }
