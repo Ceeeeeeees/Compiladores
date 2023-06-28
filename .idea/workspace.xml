@@ -135,6 +135,7 @@
         </breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+<<<<<<< Updated upstream
           <line>156</line>
           <option name="timeStamp" value="32" />
         </line-breakpoint>
@@ -142,6 +143,15 @@
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
           <line>26</line>
           <option name="timeStamp" value="35" />
+=======
+          <line>236</line>
+          <option name="timeStamp" value="49" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
+          <line>228</line>
+          <option name="timeStamp" value="50" />
+>>>>>>> Stashed changes
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/Interprete/Arbol.java</url>
@@ -152,6 +162,16 @@
           <url>file://$PROJECT_DIR$/Interprete/GeneradorPostfija.java</url>
           <line>46</line>
           <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/GeneradorPostfija.java</url>
+          <line>54</line>
+          <option name="timeStamp" value="53" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/Interprete/GeneradorPostfija.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="58" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

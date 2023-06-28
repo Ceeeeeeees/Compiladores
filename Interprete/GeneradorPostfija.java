@@ -49,6 +49,7 @@ public class GeneradorPostfija {
                     Token temp = pila.pop();
                     postfija.add(temp);
                 }
+<<<<<<< Updated upstream
                 if(pila.peek().tipo == TipoToken.INPARENT){
                     pila.pop();
                 }
@@ -56,8 +57,16 @@ public class GeneradorPostfija {
                 // Esta sección de aquí es para manejar el ")" que cierra la
                 // condición de la estructura de control
                 if(estructuraDeControl && infija.get(i + 1).tipo == TipoToken.INLLAVES){
+=======
+                if(estructuraDeControl){
+>>>>>>> Stashed changes
                     postfija.add(new Token(TipoToken.PUNTOCOMA, ";"));
                 }
+                if(!pila.isEmpty() && pila.peek().tipo == TipoToken.INPARENT){
+
+                    pila.pop();
+                }
+
             }
             else if(t.esOperador()){
                 while(!pila.isEmpty() && pila.peek().PrecedenciaMayorIgual(t)){

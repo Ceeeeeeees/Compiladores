@@ -82,6 +82,7 @@ var aux = 1;
 
 >>>>>>> Stashed changes
 var init = 1;
+<<<<<<< Updated upstream
 
 <<<<<<< Updated upstream
 init = init+1;
@@ -107,11 +108,15 @@ por(var init = 1; init <= lim; init = init + 1){
 =======
 por(init = 0 ; init<=lim ; init = i +1){
 >>>>>>> Stashed changes
+=======
+por(init =1; init <= lim; init = init + 1){
+>>>>>>> Stashed changes
     imprimir fib;
     aux = aux + fib;
     fib = aux - fib;
 }
 
+<<<<<<< Updated upstream
 imprimir "Fin";
 
 
@@ -130,6 +135,12 @@ por(var i=0; i<10; i=i+1){
         imprimir "mayor o igual a 5";
     }
 }
+
+imprimir "Fin";
+>>>>>>> Stashed changes
+=======
+
+
 
 imprimir "Fin";
 >>>>>>> Stashed changes
